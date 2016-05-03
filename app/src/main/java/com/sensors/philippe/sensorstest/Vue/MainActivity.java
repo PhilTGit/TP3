@@ -77,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements ChronometerListen
     }
 
     public void onClickBtnLogin(View view) {
+        //TODO Extraire les chaînes de caractères
         if (this.btnLogin.getText().equals("Déconnexion")) {
             this.account = null;
         } else if (this.btnLogin.getText().equals("Se connecter")) {
