@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements ChronometerListen
     @Override
     protected void onStart() {
         super.onStart();
-        this.account = new Account(100, "Tremblay", "Philippe", "Awe");
+        this.account = new Account("Tremblay", "Philippe", "Awe", "911", 100);
     }
 
     @Override
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements ChronometerListen
             this.account = null;
         } else if (this.btnLogin.getText().equals("Se connecter")) {
             //TODO Connecter l'utilisateur.
-            this.account = new Account(100, "Tremblay", "Philippe", "Awe");
+            this.account = new Account("Tremblay", "Philippe", "Awe", "911", 100);
         }
         refreshView();
     }

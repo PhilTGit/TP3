@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="inscription_returnBtnText">Retour</string>
+    <string name="inscription_IDEtText">Identifiant:</string>
+    <string name="inscription_nameEtText">Nom:</string>
+    <string name="inscription_firstNameEtText">Prénom:</string>
+    <string name="inscription_weightEtText">Poids:</string>
+    <string name="inscription_phoneNumberEtText">Numéro de téléphone d'urgence:</string>
+    <string name="inscription_confirmBtnText">Confirmer</string>
+    <string name="inscription_cancelBtnText">Annuler</string>
+
+    <string name="main_registerBtnText">S\'inscrire</string>
+    <string name="main_connectionBtnText">Se connecter</string>
+</resources>

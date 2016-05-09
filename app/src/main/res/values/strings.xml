@@ -1,3 +1,14 @@
 <resources>
-    <string name="app_name">SensorsTest</string>
+    <string name="app_name">Accelerometer</string>
+    <string name="inscription_returnBtnText">Return</string>
+    <string name="inscription_IDEtText">Identifier:</string>
+    <string name="inscription_nameEtText">Name:</string>
+    <string name="inscription_firstNameEtText">First name:</string>
+    <string name="inscription_weightEtText">Weight:</string>
+    <string name="inscription_phoneNumberEtText">Emergency phone number:</string>
+    <string name="inscription_confirmBtnText">Confirm</string>
+    <string name="inscription_cancelBtnText">Cancel</string>
+
+    <string name="main_registerBtnText">Register</string>
+    <string name="main_connectionBtnText">Connection</string>
 </resources>

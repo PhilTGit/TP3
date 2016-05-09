@@ -21,7 +21,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="onClickBtnBack"
-                android:text="Retour"/>
+                android:text="@string/inscription_returnBtnText"/>
 
         </android.support.v7.widget.Toolbar>
 
@@ -45,7 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="@dimen/activity_text_size"
-            android:text="Identifiant:"/>
+            android:text="@string/inscription_IDEtText"/>
 
         <EditText
             android:id="@+id/et_id"
@@ -57,7 +57,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="@dimen/activity_text_size"
-            android:text="Nom:"/>
+            android:text="@string/inscription_nameEtText"/>
 
         <EditText
             android:id="@+id/et_name"
@@ -69,7 +69,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="@dimen/activity_text_size"
-            android:text="Prénom:"/>
+            android:text="@string/inscription_firstNameEtText"/>
 
         <EditText
             android:id="@+id/et_firstName"
@@ -81,12 +81,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="@dimen/activity_text_size"
-            android:text="Poids:"/>
+            android:text="@string/inscription_weightEtText"/>
 
         <EditText
             android:id="@+id/et_weight"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tv_phoneNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/activity_text_size"
+            android:text="@string/inscription_phoneNumberEtText"/>
+
+        <EditText
+            android:id="@+id/et_phoneNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -100,14 +112,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="onClickBtnConfirm"
-                android:text="Confirmer"/>
+                android:text="@string/inscription_confirmBtnText"/>
 
             <Button
                 android:id="@+id/btnAnnuler"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="onClickBtnBack"
-                android:text="Annuler"/>
+                android:text="@string/inscription_cancelBtnText"/>
 
         </LinearLayout>
 

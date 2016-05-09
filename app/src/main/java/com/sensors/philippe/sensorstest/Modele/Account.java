@@ -20,15 +20,20 @@ public class Account {
      * Pseudonyme de l'accompte.
      * */
     private String accountID;
+    /**
+     * Le numéro d'urgence à appeler en cas d'accident majeur.
+     * */
+    private String emergencyNumber;
 
     public Account() {
     }
 
-    public Account(float weight, String name, String firstName, String accountID) {
+    public Account(String accountID, String name, String firstName, String emergencyNumber, float weight) {
         this.weight = weight;
         this.name = name;
         this.firstName = firstName;
         this.accountID = accountID;
+        this.emergencyNumber = emergencyNumber;
     }
 
     public float getWeight() {
@@ -45,5 +50,9 @@ public class Account {
 
     public String getAccountID() {
         return accountID;
+    }
+
+    public String getEmergencyNumber() {
+        return emergencyNumber;
     }
 }
