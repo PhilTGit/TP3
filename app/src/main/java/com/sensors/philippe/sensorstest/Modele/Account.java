@@ -5,7 +5,7 @@ package com.sensors.philippe.sensorstest.Modele;
  */
 public class Account {
     /**
-     * Poids en ______ du proriétaire de l'accompte.
+     * Poids en kg du proriétaire de l'accompte.
      * */
     private float weight;
     /**
@@ -17,7 +17,7 @@ public class Account {
      * */
     private String firstName;
     /**
-     * Pseudonyme de l'accompte.
+     * Pseudonyme de l'ccompte.
      * */
     private String accountID;
     /**
