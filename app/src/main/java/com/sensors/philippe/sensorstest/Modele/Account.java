@@ -1,8 +1,5 @@
 package com.sensors.philippe.sensorstest.Modele;
 
-/**
- * Created by philippe on 2016-05-02.
- */
 public class Account {
     /**
      * Poids en kg du proriétaire de l'accompte.
@@ -25,15 +22,21 @@ public class Account {
      * */
     private String emergencyNumber;
 
+    /**
+     * Valeur booléenne indiquant si l'utilisateur porte toujour sa ceinture de sécurité.
+     */
+    private boolean seatBeltAlwaysOn;
+
     public Account() {
     }
 
-    public Account(String accountID, String name, String firstName, String emergencyNumber, float weight) {
+    public Account(String accountID, String name, String firstName, String emergencyNumber, float weight, boolean seatBeltAlwaysOn) {
         this.weight = weight;
         this.name = name;
         this.firstName = firstName;
         this.accountID = accountID;
         this.emergencyNumber = emergencyNumber;
+        this.seatBeltAlwaysOn = seatBeltAlwaysOn;
     }
 
     public float getWeight() {
@@ -54,5 +57,9 @@ public class Account {
 
     public String getEmergencyNumber() {
         return emergencyNumber;
+    }
+
+    public boolean isSeatBeltAlwaysOn() {
+        return seatBeltAlwaysOn;
     }
 }
