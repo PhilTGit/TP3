@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.sensors.philippe.sensorstest.Controleur.Chronometer;
 import com.sensors.philippe.sensorstest.Controleur.ChronometerListener;
 import com.sensors.philippe.sensorstest.Modele.Account;
+import com.sensors.philippe.sensorstest.Modele.ForcesCalculator;
 import com.sensors.philippe.sensorstest.R;
 
 public class MainActivity extends AppCompatActivity implements ChronometerListener, SensorEventListener{
@@ -59,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements ChronometerListen
     @Override
     protected void onStart() {
         super.onStart();
-        this.account = new Account("Tremblay", "Philippe", "Awe", "911", 100);
+        this.account = new Account("Tremblay", "Philippe", "Awe", "911", 100,true);
     }
 
     @Override
@@ -82,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements ChronometerListen
             this.account = null;
         } else if (this.btnLogin.getText().equals("Se connecter")) {
             //TODO Connecter l'utilisateur.
-            this.account = new Account("Tremblay", "Philippe", "Awe", "911", 100);
+            this.account = new Account("Tremblay", "Philippe", "Awe", "911", 100,true);
         }
         refreshView();
     }
@@ -116,6 +117,12 @@ public class MainActivity extends AppCompatActivity implements ChronometerListen
             tv_Y.setText("Y: " + Float.toString(event.values[1]));
             tv_Z.setText("Z: " + Float.toString(event.values[2]));
             sensorToUpdate = false;
+
+            //3300 Newtons est la force nécessaire pour avoir une chance sur 4 de briser une cote et
+            //une quasi certidude de la félée.
+            if(ForcesCalculator.calculateGforceOnBody(account.getWeight(),event,account.isSeatBeltAlwaysOn()) >= 3300){
+                //TODO enregistrer la collission et appeller l'activity d'alerte
+            }
         }
     }
 
