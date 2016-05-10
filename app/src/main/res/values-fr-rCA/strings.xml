@@ -5,7 +5,7 @@
     <string name="inscription_nameEtText">Nom:</string>
     <string name="inscription_firstNameEtText">Prénom:</string>
     <string name="inscription_weightEtText">Poids:</string>
-    <string name="inscription_phoneNumberEtText">Numéro de téléphone d'urgence:</string>
+    <string name="inscription_phoneNumberEtText">Numéro de téléphone d\'urgence:</string>
     <string name="inscription_confirmBtnText">Confirmer</string>
     <string name="inscription_cancelBtnText">Annuler</string>
 
