@@ -53,7 +53,7 @@ public class Inscription extends AppCompatActivity {
             if (Validator.validatePhoneNumber(phoneNumber)) {
                 if ((name.length() > 0) && (firstName.length() > 0)) {
                     if (weight > 0) {
-                        Account account = new Account(id, name, firstName, phoneNumber, weight);
+                        Account account = new Account(id, name, firstName, phoneNumber, weight, true);
                         //TODO Ajouter le nouveau compte dans la base de données.
                     }
                 }
