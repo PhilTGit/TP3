@@ -14,7 +14,7 @@ public class Account {
      * */
     private String firstName;
     /**
-     * Pseudonyme de l'ccompte.
+     * Pseudonyme du compte.
      * */
     private String accountID;
     /**

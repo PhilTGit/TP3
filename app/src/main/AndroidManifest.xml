@@ -15,7 +15,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Vue.Inscription"></activity>
+        <activity android:name=".Vue.Inscription" />
+        <activity android:name=".Vue.AlertActivity"></activity>
     </application>
 
 </manifest>

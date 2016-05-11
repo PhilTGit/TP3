@@ -9,18 +9,18 @@ public class Chronometer {
     private ChronometerListener chronometerListener;
     private CountDownTimer timer;
 
-    public Chronometer(final long millisInFuture, long countDownInterval, ChronometerType type, ChronometerListener listener) {
+    public Chronometer(final String id, final long millisInFuture, long countDownInterval, ChronometerType type, ChronometerListener listener) {
         this.chronometerListener = listener;
         this.chronometerType = type;
         this.timer = new CountDownTimer(millisInFuture, countDownInterval) {
             @Override
             public void onTick(long millisUntilFinished) {
-                chronometerListener.update(millisUntilFinished);
+                chronometerListener.update(id, millisUntilFinished);
             }
 
             @Override
             public void onFinish() {
-                chronometerListener.update(0);
+                chronometerListener.onFinish(id);
                 if (chronometerType == ChronometerType.INFINITE)
                     this.start();
             }

@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements ChronometerListen
         btnLogin = (Button)findViewById(R.id.btnLogin);
         btnRegister = (Button)findViewById(R.id.btnRegister);
 
-        this.chronometer = new Chronometer(150, 150, Chronometer.ChronometerType.INFINITE, this);
+        this.chronometer = new Chronometer("updateRateTimer", 150, 150, Chronometer.ChronometerType.INFINITE, this);
         sensorToUpdate = true;
 
         smanager = (SensorManager)getSystemService(SENSOR_SERVICE);
@@ -60,7 +60,10 @@ public class MainActivity extends AppCompatActivity implements ChronometerListen
     @Override
     protected void onStart() {
         super.onStart();
-        this.account = new Account("Tremblay", "Philippe", "Awe", "911", 100,true);
+        //TODO Retirer ceci
+        startActivity(new Intent(getBaseContext(), AlertActivity.class));
+        //TODO Charger le dernier compte utilisé.
+        this.account = new Account("Awe", "Tremblay", "Philippe", "911", 100,true);
     }
 
     @Override
@@ -83,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements ChronometerListen
             this.account = null;
         } else if (this.btnLogin.getText().equals("Se connecter")) {
             //TODO Connecter l'utilisateur.
-            this.account = new Account("Tremblay", "Philippe", "Awe", "911", 100,true);
+            this.account = new Account("Awe", "Tremblay", "Philippe", "911", 100,true);
         }
         refreshView();
     }
@@ -105,9 +108,14 @@ public class MainActivity extends AppCompatActivity implements ChronometerListen
     }
 
     @Override
-    public void update(long millisUntilFinished) {
+    public void update(String id, long millisUntilFinished) {
         if (millisUntilFinished == 0)
             sensorToUpdate = true;
+    }
+
+    @Override
+    public void onFinish(String id) {
+
     }
 
     @Override
