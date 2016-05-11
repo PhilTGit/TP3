@@ -13,4 +13,5 @@
     <string name="main_connectionBtnText">Se connecter</string>
 
     <string name="alert_alertText">Alerte</string>
+    <string name="alert_callingNow">Appel maintenant!</string>
 </resources>

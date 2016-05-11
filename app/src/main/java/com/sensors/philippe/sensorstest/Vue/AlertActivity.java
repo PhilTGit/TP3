@@ -78,17 +78,21 @@ public class AlertActivity extends AppCompatActivity implements ChronometerListe
             refreshView();
             updateBgColorCode();
         } else if (id.equals(AUTO_CALL_TIMER)) {
-            ViewGroup.LayoutParams timerLayout = tv_timer.getLayoutParams();
-            timerLayout.height = ViewGroup.LayoutParams.MATCH_PARENT;
-            tv_timer.setLayoutParams(timerLayout);
-            tv_timer.setText("Calling now!");
+            setTextToCallingNow();
+            //TODO Appelé les secours.
         }
     }
 
     public void onClickCallNowBtn(View view) {
+        setTextToCallingNow();
+        this.callTimer.stop();
         //TODO Appeler les secours.
     }
 
+
+    /**
+     * #region Gestion du flash de l'écran
+     * */
     public void onClickCancelBtn(View view) {
         //TODO Retourner à la page principale. Enregistrer la collision quand même en indiquant que l'appel a été annulé.
         startActivity(new Intent(getBaseContext(), MainActivity.class));
@@ -114,5 +118,15 @@ public class AlertActivity extends AppCompatActivity implements ChronometerListe
         this.bgcolors.add(5, Color.parseColor("#d32f2f"));
         this.bgcolors.add(6, Color.parseColor("#c62828"));
         this.bgcolors.add(7, Color.parseColor("#b71c1c"));
+    }
+    /**
+     * #endregion
+     * */
+
+    private void setTextToCallingNow() {
+        ViewGroup.LayoutParams timerLayout = tv_timer.getLayoutParams();
+        timerLayout.height = ViewGroup.LayoutParams.MATCH_PARENT;
+        tv_timer.setLayoutParams(timerLayout);
+        tv_timer.setText(R.string.alert_callingNow);
     }
 }

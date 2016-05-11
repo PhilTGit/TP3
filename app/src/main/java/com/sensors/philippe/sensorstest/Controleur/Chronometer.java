@@ -30,4 +30,6 @@ public class Chronometer {
     public void start(){
         this.timer.start();
     }
+
+    public void stop() {this.timer.cancel();}
 }
