@@ -11,4 +11,6 @@
 
     <string name="main_registerBtnText">S\'inscrire</string>
     <string name="main_connectionBtnText">Se connecter</string>
+
+    <string name="alert_alertText">Alerte</string>
 </resources>
