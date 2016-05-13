@@ -27,7 +27,7 @@ public class ForcesCalculator {
         }
         return forceOnBody;
     }
-    public static double claculateHadInjuryCriterion(SensorEvent event){
+    public static double calculateHadInjuryCriterion(SensorEvent event){
 
         BigDecimal totalForcesOnBodyMinusGravity = new BigDecimal( event.values[0] + event.values[1] + event.values[2]-9.8);
 

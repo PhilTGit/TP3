@@ -134,7 +134,8 @@ public class MainActivity extends AppCompatActivity implements ChronometerListen
             sensorToUpdate = false;
 
 
-            if(ForcesCalculator.calculateNforceOnBody(account.getWeight(),event,account.isSeatBeltAlwaysOn()) >= FORCE_NEED_TO_CALL){
+            if(ForcesCalculator.calculateNforceOnBody(account.getWeight(),event,account.isSeatBeltAlwaysOn()) >= FORCE_NEED_TO_CALL ||
+                    ForcesCalculator.calculateNforceOnBody(account.getWeight(),event,account.isSeatBeltAlwaysOn()) == -1){
 
 //                Intent alertIntent = new Intent(getApplicationContext(), AlertActivity.class);
 //                alertIntent.putExtra("PHONE_NUMBER",account.getEmergencyNumber());
@@ -142,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements ChronometerListen
                 //TODO enregistrer la collision
             }
 
-            if(ForcesCalculator.claculateHadInjuryCriterion(event) >= HIC){
+            if(ForcesCalculator.calculateHadInjuryCriterion(event) >= HIC){
                 //Intent alertIntent = new Intent(getApplicationContext(), AlertActivity.class);
 //                alertIntent.putExtra("PHONE_NUMBER",account.getEmergencyNumber());
 //                startActivity(alertIntent);
