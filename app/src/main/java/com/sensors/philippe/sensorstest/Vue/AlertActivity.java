@@ -3,12 +3,14 @@ package com.sensors.philippe.sensorstest.Vue;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sensors.philippe.sensorstest.Controleur.Chronometer;
 import com.sensors.philippe.sensorstest.Controleur.ChronometerListener;
@@ -32,13 +34,17 @@ public class AlertActivity extends AppCompatActivity implements ChronometerListe
     private int bgColorCodeDirection;
     private List<Integer> bgcolors;
 
+    private String phoneNumber ="";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alert);
 
         tv_timer = (TextView)findViewById(R.id.tv_timer);
-        tv_timer.setText("30");
+        if (tv_timer != null) {
+            tv_timer.setText("30");
+        }
 
         llayout_flashing = (LinearLayout)findViewById(R.id.llayout_flashing);
         llayout_flashing.setBackgroundColor(Color.parseColor("#ffffff"));
@@ -53,6 +59,11 @@ public class AlertActivity extends AppCompatActivity implements ChronometerListe
         initializeColorsList();
         refreshView();
         updateBgColorCode();
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+             phoneNumber = extras.getString("PHONE_NUMBER");
+        }
     }
 
     @Override
@@ -79,14 +90,16 @@ public class AlertActivity extends AppCompatActivity implements ChronometerListe
             updateBgColorCode();
         } else if (id.equals(AUTO_CALL_TIMER)) {
             setTextToCallingNow();
-            //TODO Appelé les secours.
+            makeCall();
+            //TODO Enregistrer que l'appel ne fut pas accéléré
         }
     }
 
     public void onClickCallNowBtn(View view) {
         setTextToCallingNow();
         this.callTimer.stop();
-        //TODO Appeler les secours.
+        makeCall();
+        //TODO Enregistrer que l'Appel fut accéléré
     }
 
 
@@ -129,4 +142,20 @@ public class AlertActivity extends AppCompatActivity implements ChronometerListe
         tv_timer.setLayoutParams(timerLayout);
         tv_timer.setText(R.string.alert_callingNow);
     }
-}
+
+    /**
+     * Passe l'appel au service d'urgence choisie par l'utilisateur.
+     */
+    private void makeCall(){
+
+
+        Intent in = new Intent(Intent.ACTION_CALL, Uri.parse(phoneNumber));
+        try{
+            startActivity(in);
+        }
+
+        catch (android.content.ActivityNotFoundException ex){
+        }
+    }
+    }
+

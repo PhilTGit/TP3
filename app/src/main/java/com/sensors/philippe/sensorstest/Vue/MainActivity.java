@@ -35,6 +35,12 @@ public class MainActivity extends AppCompatActivity implements ChronometerListen
 
     private Account account;
 
+    //HIC>300 appeller, car environ un impact à 50km/h avec airbag
+    private static int HIC =300;
+    //3300 Newtons est la force nécessaire pour avoir une chance sur 4 de briser une cote et
+    //une quasi certidude de la félée.
+    private static int FORCE_NEED_TO_CALL = 3300;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements ChronometerListen
         //TODO Retirer ceci
         startActivity(new Intent(getBaseContext(), AlertActivity.class));
         //TODO Charger le dernier compte utilisé.
-        this.account = new Account("Awe", "Tremblay", "Philippe", 911, 100, true);
+        this.account = new Account("Awe", "Tremblay", "Philippe", "00000000", 100, true);
     }
 
     @Override
@@ -81,12 +87,13 @@ public class MainActivity extends AppCompatActivity implements ChronometerListen
     }
 
     public void onClickBtnLogin(View view) {
-        //TODO Extraire les chaînes de caractères
+
         if (this.btnLogin.getText().toString().equals(R.string.main_connectionBtnText_connected)) {
             this.account = null;
         } else if (this.btnLogin.getText().toString().equals(R.string.main_connectionBtnText_notConnected)) {
+            //TODO Extraire les chaînes de caractères
             //TODO Connecter l'utilisateur.
-            this.account = new Account("Awe", "Tremblay", "Philippe", 911, 100, true);
+            this.account = new Account("Awe", "Tremblay", "Philippe", "00000000", 100, true);
         }
         refreshView();
     }
@@ -126,12 +133,21 @@ public class MainActivity extends AppCompatActivity implements ChronometerListen
             tv_Z.setText("Z: " + Float.toString(event.values[2]));
             sensorToUpdate = false;
 
-            //3300 Newtons est la force nécessaire pour avoir une chance sur 4 de briser une cote et
-            //une quasi certidude de la félée.
-            if(ForcesCalculator.calculateNforceOnBody(account.getWeight(),event,account.isSeatBeltAlwaysOn()) >= 3300){
-                //TODO enregistrer la collision et appeler l'activity d'alerte
+
+            if(ForcesCalculator.calculateNforceOnBody(account.getWeight(),event,account.isSeatBeltAlwaysOn()) >= FORCE_NEED_TO_CALL){
+
+//                Intent alertIntent = new Intent(getApplicationContext(), AlertActivity.class);
+//                alertIntent.putExtra("PHONE_NUMBER",account.getEmergencyNumber());
+//                startActivity(alertIntent);
+                //TODO enregistrer la collision
             }
-            //HIC>300 appeller, car environ un impact à 50km/h avec airbag
+
+            if(ForcesCalculator.claculateHadInjuryCriterion(event) >= HIC){
+                //Intent alertIntent = new Intent(getApplicationContext(), AlertActivity.class);
+//                alertIntent.putExtra("PHONE_NUMBER",account.getEmergencyNumber());
+//                startActivity(alertIntent);
+                //TODO enregistrer la collision
+            }
         }
     }
 
