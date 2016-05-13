@@ -16,5 +16,8 @@
 
     <string name="alert_alertText">Warning</string>
     <string name="alert_callingNow">Calling now!</string>
+    <string name="collisionFrag_collisionDate">Date:</string>
+    <string name="collisionFrag_collisionStrength">Strength:</string>
+    <string name="collisionFrag_collisionEmergency">Emergency called:</string>
 
 </resources>
