@@ -15,25 +15,29 @@ public class ForcesCalculator {
      */
     public static double calculateNforceOnBody (float userWeight, String[] valueOfAccelerometer, boolean seatBeltAlwaysOn){
         double forceOnBody = 0.0d;
-        double totalForcesOnBody = Double.valueOf(valueOfAccelerometer[0]) +
+        double totalForcesOnBodyMinusGravity = Double.valueOf(valueOfAccelerometer[0]) +
                                    Double.valueOf(valueOfAccelerometer[1]) +
                                    Double.valueOf(valueOfAccelerometer[2])-9.8;
 
 
-        if ((totalForcesOnBody)< -1){
+        if ((totalForcesOnBodyMinusGravity)< -1){
             return -1;
         }
-        forceOnBody = userWeight * (totalForcesOnBody);
+        forceOnBody = userWeight * (totalForcesOnBodyMinusGravity);
         if(seatBeltAlwaysOn){
             forceOnBody = forceOnBody *0.5;
         }
         return forceOnBody;
     }
-    public static double calculateHadInjuryCriterion(String[] valueOfAccelerometer){
+    public static double calculateHeadInjuryCriterion(String[] valueOfAccelerometer){
 
         BigDecimal totalForcesOnBodyMinusGravity = new BigDecimal( Double.valueOf(valueOfAccelerometer[0]) +
                 Double.valueOf(valueOfAccelerometer[1]) +
                 Double.valueOf(valueOfAccelerometer[2])-9.8);
+
+        if ((totalForcesOnBodyMinusGravity.longValue())< -1){
+            return -1;
+        }
 
         totalForcesOnBodyMinusGravity = totalForcesOnBodyMinusGravity.pow(5);
 

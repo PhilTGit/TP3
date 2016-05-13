@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements ChronometerListen
 
     private Account account;
 
-    //HIC>300 appeller, car environ un impact à 50km/h avec airbag
+    //HIC>300 appeller, car c'est la limite supportable avant d'avoir de gros risque pour un adulte moyen
     private static int HIC =700;
     //3300 Newtons est la force nécessaire pour avoir une chance sur 4 de briser une cote et
     //une quasi certidude de la félée.
@@ -154,7 +154,8 @@ public class MainActivity extends AppCompatActivity implements ChronometerListen
                 //TODO enregistrer la collision
             }
 
-            if(ForcesCalculator.calculateHadInjuryCriterion(valueOfAccelerometer) >= HIC){
+            if(ForcesCalculator.calculateHeadInjuryCriterion(valueOfAccelerometer) >= HIC ||
+                    ForcesCalculator.calculateHeadInjuryCriterion(valueOfAccelerometer) ==-1  ){
                 //Intent alertIntent = new Intent(getApplicationContext(), AlertActivity.class);
 //                alertIntent.putExtra("PHONE_NUMBER",account.getEmergencyNumber());
 //                startActivity(alertIntent);
