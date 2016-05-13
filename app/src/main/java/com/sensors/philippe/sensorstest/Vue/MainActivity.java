@@ -129,7 +129,11 @@ public class MainActivity extends AppCompatActivity implements ChronometerListen
             //3300 Newtons est la force nécessaire pour avoir une chance sur 4 de briser une cote et
             //une quasi certidude de la félée.
             if(ForcesCalculator.calculateNforceOnBody(account.getWeight(),event,account.isSeatBeltAlwaysOn()) >= 3300){
-                //TODO enregistrer la collision et appeler l'activity d'alerte
+
+//                Intent alertIntent = new Intent(getApplicationContext(), AlertActivity.class);
+//                alertIntent.putExtra("PHONE_NUMBER",account.getEmergencyNumber());
+//                startActivity(alertIntent);
+                //TODO enregistrer la collision
             }
             //HIC>300 appeller, car environ un impact à 50km/h avec airbag
             if(ForcesCalculator.claculateHadInjuryCriterion(event) >= 300){
