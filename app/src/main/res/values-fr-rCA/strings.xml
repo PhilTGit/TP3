@@ -16,5 +16,8 @@
 
     <string name="alert_alertText">Alerte</string>
     <string name="alert_callingNow">Appel maintenant!</string>
+    <string name="collisionFrag_collisionDate">Date:</string>
+    <string name="collisionFrag_collisionStrength">Force:</string>
+    <string name="collisionFrag_collisionEmergency">Services d\'urgences appelés:</string>
 
 </resources>

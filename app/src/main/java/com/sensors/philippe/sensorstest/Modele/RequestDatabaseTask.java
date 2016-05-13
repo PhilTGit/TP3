@@ -1,6 +1,11 @@
 package com.sensors.philippe.sensorstest.Modele;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.os.AsyncTask;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 
 public class RequestDatabaseTask extends AsyncTask<Object, Integer, Object> {
@@ -19,6 +24,13 @@ public class RequestDatabaseTask extends AsyncTask<Object, Integer, Object> {
             //Il y a toujours le listener à l'indice 0 et le 'RequestType' à l'indice 1.
             listener = (DatabaseManagerListener)params[0];
             requestType = (RequestType)params[1];
+
+            String link = "localhost:8080/sample";
+            try {
+                URL url = new URL(link);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
 
             switch (requestType) {
                 case CREATE_ACCOUNT:
