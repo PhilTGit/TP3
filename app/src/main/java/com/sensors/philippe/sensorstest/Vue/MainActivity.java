@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements ChronometerListen
         //TODO Retirer ceci
         startActivity(new Intent(getBaseContext(), AlertActivity.class));
         //TODO Charger le dernier compte utilisé.
-        this.account = new Account("Awe", "Tremblay", "Philippe", 911, 100, true);
+        this.account = new Account("Awe", "Tremblay", "Philippe", "00000000", 100, true);
     }
 
     @Override
@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements ChronometerListen
             this.account = null;
         } else if (this.btnLogin.getText().toString().equals(R.string.main_connectionBtnText_notConnected)) {
             //TODO Connecter l'utilisateur.
-            this.account = new Account("Awe", "Tremblay", "Philippe", 911, 100, true);
+            this.account = new Account("Awe", "Tremblay", "Philippe", "00000000", 100, true);
         }
         refreshView();
     }
@@ -137,7 +137,10 @@ public class MainActivity extends AppCompatActivity implements ChronometerListen
             }
             //HIC>300 appeller, car environ un impact à 50km/h avec airbag
             if(ForcesCalculator.claculateHadInjuryCriterion(event) >= 300){
-                //TODO enregistrer la collision et appeler l'activity d'alerte
+                //Intent alertIntent = new Intent(getApplicationContext(), AlertActivity.class);
+//                alertIntent.putExtra("PHONE_NUMBER",account.getEmergencyNumber());
+//                startActivity(alertIntent);
+                //TODO enregistrer la collision
             }
         }
     }
