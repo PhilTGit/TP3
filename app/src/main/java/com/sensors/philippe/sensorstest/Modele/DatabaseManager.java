@@ -1,14 +1,14 @@
 package com.sensors.philippe.sensorstest.Modele;
 
-public class DatabaseManager implements RequestDatabaseTask.CallBack{
+public class DatabaseManager {
 
     public DatabaseManager() {
     }
 
-    public void requestDatabase(DatabaseManagerListener listener, RequestType requestType) {
+    public static void requestDatabase(DatabaseManagerListener listener, RequestType requestType) {
         switch (requestType) {
             case CREATE_ACCOUNT:
-                RequestDatabaseTask task = new RequestDatabaseTask(this);
+                RequestDatabaseTask task = new RequestDatabaseTask();
                 task.execute(listener, requestType);
                 break;
             default:
@@ -16,8 +16,7 @@ public class DatabaseManager implements RequestDatabaseTask.CallBack{
         }
     }
 
-    @Override
-    public void requestResult(DatabaseManagerListener listener, RequestType requestType, Object object) {
+    public static void requestResult(DatabaseManagerListener listener, RequestType requestType, Object object) {
         listener.requestResult(requestType, object);
     }
 }

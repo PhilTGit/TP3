@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements ChronometerListen
         //TODO Retirer ceci
         startActivity(new Intent(getBaseContext(), AlertActivity.class));
         //TODO Charger le dernier compte utilisé.
-        this.account = new Account("Awe", "Tremblay", "Philippe", "00000000", 100, true);
+        this.account = new Account("Awe", "AsYouCommand", "Tremblay", "Philippe", "00000000", 100, true);
     }
 
     @Override
@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements ChronometerListen
         } else if (this.btnLogin.getText().toString().equals(R.string.main_connectionBtnText_notConnected)) {
             //TODO Extraire les chaînes de caractères
             //TODO Connecter l'utilisateur.
-            this.account = new Account("Awe", "Tremblay", "Philippe", "00000000", 100, true);
+            this.account = new Account("Awe", "AsYouCommand", "Tremblay", "Philippe", "00000000", 100, true);
         }
         refreshView();
     }
