@@ -40,10 +40,10 @@ public class Colision {
                 String.valueOf(R.string.callDone);
 
         if(callDone){
-            toReturn+= String.valueOf(R.string.yes);
+            toReturn+= String.valueOf(R.string.yes) +"/n";
         }
         else{
-            toReturn+= String.valueOf(R.string.no);
+            toReturn+= String.valueOf(R.string.no)+"/n";
         }
 
         return toReturn;
