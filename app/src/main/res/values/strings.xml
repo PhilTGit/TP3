@@ -20,5 +20,11 @@
     <string name="collisionFrag_collisionDate">Date:</string>
     <string name="collisionFrag_collisionStrength">Strength:</string>
     <string name="collisionFrag_collisionEmergency">Emergency called:</string>
+    <string name="collisionDate">Collision date: </string>
+    <string name="collisionStrength">, Collision strength: </string>
+    <string name="collisionOwner">, Account: </string>
+    <string name="callDone">, callDone: </string>
+    <string name="yes">yes</string>
+    <string name="no">no</string>
 
 </resources>

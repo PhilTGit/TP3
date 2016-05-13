@@ -91,7 +91,7 @@ public class AlertActivity extends AppCompatActivity implements ChronometerListe
         } else if (id.equals(AUTO_CALL_TIMER)) {
             setTextToCallingNow();
             makeCall();
-            //TODO Enregistrer que l'appel ne fut pas accéléré
+
         }
     }
 
@@ -99,7 +99,7 @@ public class AlertActivity extends AppCompatActivity implements ChronometerListe
         setTextToCallingNow();
         this.callTimer.stop();
         makeCall();
-        //TODO Enregistrer que l'Appel fut accéléré
+
     }
 
 

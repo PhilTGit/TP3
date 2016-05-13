@@ -20,5 +20,11 @@
     <string name="collisionFrag_collisionDate">Date:</string>
     <string name="collisionFrag_collisionStrength">Force:</string>
     <string name="collisionFrag_collisionEmergency">Services d\'urgences appelés:</string>
+    <string name="collisionDate">Date de la collision: </string>
+    <string name="collisionStrength">,Force de la collision: </string>
+    <string name="collisionOwner">, Victime: </string>
+    <string name="callDone">, Les secours furent appellés: </string>
+    <string name="yes">oui</string>
+    <string name="no">non</string>
 
 </resources>

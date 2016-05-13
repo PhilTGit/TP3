@@ -1,5 +1,8 @@
 package com.sensors.philippe.sensorstest.Modele;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.sensors.philippe.sensorstest.R;
+
 import java.util.Date;
 
 public class Colision {
@@ -27,6 +30,25 @@ public class Colision {
 
     public double getColisionStrength() {
         return colisionStrength;
+    }
+
+    @Override
+    public String toString() {
+        String toReturn = String.valueOf(R.string.collisionOwner) + colisionOwner
+                +String.valueOf(R.string.collisionDate) + colisionDate +
+                String.valueOf(R.string.collisionStrength) + colisionStrength +
+                String.valueOf(R.string.callDone);
+
+        if(callDone){
+            toReturn+= String.valueOf(R.string.yes);
+        }
+        else{
+            toReturn+= String.valueOf(R.string.no);
+        }
+
+        return toReturn;
+
+
     }
 
     public void setColisionStrength(double colisionStrength) {
