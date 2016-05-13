@@ -20,7 +20,7 @@ public class Account {
     /**
      * Le numéro d'urgence à appeler en cas d'accident majeur.
      * */
-    private String emergencyNumber;
+    private int emergencyNumber;
 
     /**
      * Valeur booléenne indiquant si l'utilisateur porte toujour sa ceinture de sécurité.
@@ -30,7 +30,7 @@ public class Account {
     public Account() {
     }
 
-    public Account(String accountID, String name, String firstName, String emergencyNumber, float weight, boolean seatBeltAlwaysOn) {
+    public Account(String accountID, String name, String firstName, int emergencyNumber, float weight, boolean seatBeltAlwaysOn) {
         this.weight = weight;
         this.name = name;
         this.firstName = firstName;
@@ -55,7 +55,7 @@ public class Account {
         return accountID;
     }
 
-    public String getEmergencyNumber() {
+    public int getEmergencyNumber() {
         return emergencyNumber;
     }
 

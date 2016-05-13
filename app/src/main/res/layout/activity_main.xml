@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:onClick="onClickBtnLogin"
-                android:text="@string/main_connectionBtnText"/>
+                android:text="@string/main_connectionBtnText_notConnected"/>
 
             <TextView
                 android:id="@+id/tvLogin"

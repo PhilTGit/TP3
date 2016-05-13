@@ -10,8 +10,11 @@
     <string name="inscription_cancelBtnText">Cancel</string>
 
     <string name="main_registerBtnText">Register</string>
-    <string name="main_connectionBtnText">Connection</string>
+    <string name="main_connectionBtnText_notConnected">Log in</string>
+    <string name="main_connectionBtnText_connected">Disconnect</string>
+    <string name="main_idText_notConnected">Not connected</string>
 
     <string name="alert_alertText">Warning</string>
     <string name="alert_callingNow">Calling now!</string>
+
 </resources>

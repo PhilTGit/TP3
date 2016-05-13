@@ -10,8 +10,11 @@
     <string name="inscription_cancelBtnText">Annuler</string>
 
     <string name="main_registerBtnText">S\'inscrire</string>
-    <string name="main_connectionBtnText">Se connecter</string>
+    <string name="main_connectionBtnText_notConnected">Se connecter</string>
+    <string name="main_connectionBtnText_connected">Déconnexion</string>
+    <string name="main_idText_notConnected">Non connecter</string>
 
     <string name="alert_alertText">Alerte</string>
     <string name="alert_callingNow">Appel maintenant!</string>
+
 </resources>
