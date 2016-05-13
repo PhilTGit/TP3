@@ -132,6 +132,9 @@ public class MainActivity extends AppCompatActivity implements ChronometerListen
                 //TODO enregistrer la collision et appeler l'activity d'alerte
             }
             //HIC>300 appeller, car environ un impact à 50km/h avec airbag
+            if(ForcesCalculator.claculateHadInjuryCriterion(event) >= 300){
+                //TODO enregistrer la collision et appeler l'activity d'alerte
+            }
         }
     }
 
