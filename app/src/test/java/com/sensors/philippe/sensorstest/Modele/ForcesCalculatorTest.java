@@ -22,19 +22,35 @@ public class ForcesCalculatorTest {
 
 
 
-    @Before
-    private void inititeTest(){
+    @Test
+    public void canDetectBrokenAccellerometer() throws Exception {
+        String[] values = new String[3];
+        values[0]= "0";
+        values[1]= "4";
+        values[2]= "0";
 
+        Assert.assertEquals(-1.0,ForcesCalculator.calculateNforceOnBody(100,values,true));
     }
 
+
     @Test
-    public void testCalculateNforceOnBody() throws Exception {
+    public void canCalculateforce() throws Exception {
+        String[] values = new String[3];
+        values[0]= "0";
+        values[1]= "10.8";
+        values[2]= "0";
 
-
+        Assert.assertEquals(50.0,ForcesCalculator.calculateNforceOnBody(100,values,true));
     }
 
     @Test
     public void testClaculateHadInjuryCriterion() throws Exception {
+
+        String[] values = new String[3];
+        values[0]= "0";
+        values[1]= "29.8";
+        values[2]= "0";
+        Assert.assertEquals(50.0,ForcesCalculator.calculateHadInjuryCriterion(values));
 
     }
 }
