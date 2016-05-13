@@ -45,8 +45,7 @@ public class Inscription extends AppCompatActivity {
         String phoneNumber = et_phoneNumber.getText().toString();
         float weight = Float.parseFloat(et_Weight.getText().toString());
 
-        //Ceci est temporaire; Enlever quand @see Validator.validatePhoneNumber(String phoneNumber) est terminée.
-        phoneNumber = "911";
+
 
 
         if (Validator.validateID(id)) {
