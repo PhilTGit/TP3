@@ -128,14 +128,25 @@ public class MainActivity extends AppCompatActivity implements ChronometerListen
     @Override
     public void onSensorChanged(SensorEvent event) {
         if (sensorToUpdate) {
-            tv_X.setText("X: " + Float.toString(event.values[0]));
-            tv_Y.setText("Y: " + Float.toString(event.values[1]));
-            tv_Z.setText("Z: " + Float.toString(event.values[2]));
+
+            String XForce = Float.toString(event.values[0]);
+            String YForce = Float.toString(event.values[1]);
+            String ZForce = Float.toString(event.values[2]);
+
+            String[] valueOfAccelerometer = new String[3];
+            valueOfAccelerometer[0] = XForce;
+            valueOfAccelerometer[1] = YForce;
+            valueOfAccelerometer[2] = ZForce;
+
+            tv_X.setText("X: " + XForce);
+            tv_Y.setText("Y: " + YForce);
+            tv_Z.setText("Z: " + ZForce);
             sensorToUpdate = false;
 
-
-            if(ForcesCalculator.calculateNforceOnBody(account.getWeight(),event,account.isSeatBeltAlwaysOn()) >= FORCE_NEED_TO_CALL ||
-                    ForcesCalculator.calculateNforceOnBody(account.getWeight(),event,account.isSeatBeltAlwaysOn()) == -1){
+            if(ForcesCalculator.calculateNforceOnBody(account.getWeight(),valueOfAccelerometer,
+                    account.isSeatBeltAlwaysOn()) >= FORCE_NEED_TO_CALL ||
+                    ForcesCalculator.calculateNforceOnBody(account.getWeight(),
+                            valueOfAccelerometer,account.isSeatBeltAlwaysOn()) == -1){
 
 //                Intent alertIntent = new Intent(getApplicationContext(), AlertActivity.class);
 //                alertIntent.putExtra("PHONE_NUMBER",account.getEmergencyNumber());
@@ -143,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements ChronometerListen
                 //TODO enregistrer la collision
             }
 
-            if(ForcesCalculator.calculateHadInjuryCriterion(event) >= HIC){
+            if(ForcesCalculator.calculateHadInjuryCriterion(valueOfAccelerometer) >= HIC){
                 //Intent alertIntent = new Intent(getApplicationContext(), AlertActivity.class);
 //                alertIntent.putExtra("PHONE_NUMBER",account.getEmergencyNumber());
 //                startActivity(alertIntent);

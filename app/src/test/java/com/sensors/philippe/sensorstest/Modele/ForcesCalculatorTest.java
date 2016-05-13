@@ -19,17 +19,17 @@ import static org.junit.Assert.*;
 
 public class ForcesCalculatorTest {
 
-    private SensorEvent sensor;
+
 
 
     @Before
     private void inititeTest(){
 
-        sensor = mock(SensorEvent.class);
     }
 
     @Test
     public void testCalculateNforceOnBody() throws Exception {
+
 
     }
 
