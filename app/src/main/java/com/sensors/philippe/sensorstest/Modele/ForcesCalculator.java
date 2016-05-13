@@ -28,20 +28,14 @@ public class ForcesCalculator {
         return forceOnBody;
     }
     public static double claculateHadInjuryCriterion(SensorEvent event){
-        double hic=0.0d;
 
-        double totalForcesOnBodyMinusGravity = event.values[0] + event.values[1] + event.values[2]-9.8;
+        BigDecimal totalForcesOnBodyMinusGravity = new BigDecimal( event.values[0] + event.values[1] + event.values[2]-9.8);
 
-        double t1 = 0.0d;
-        double t2 = 0.15d;
+        totalForcesOnBodyMinusGravity = totalForcesOnBodyMinusGravity.pow(5);
 
-        BigDecimal t = new BigDecimal(5);
+       BigDecimal hic = BigDecimal.valueOf((0.15)*(((1/(0.15))* Math.sqrt(totalForcesOnBodyMinusGravity.doubleValue()))));
 
-        //TODO change double for BigDecimal
-
-        //hic = (t2-t1)*(((1/(t2-t1))*totalForcesOnBodyMinusGravity)^2.5);
-
-        return hic;
+        return hic.longValueExact();
     }
 
 
