@@ -11,11 +11,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sensors.philippe.sensorstest.Controleur.Chronometer;
 import com.sensors.philippe.sensorstest.Controleur.ChronometerListener;
 import com.sensors.philippe.sensorstest.Modele.Account;
+import com.sensors.philippe.sensorstest.Modele.DatabaseManagerListener;
 import com.sensors.philippe.sensorstest.Modele.ForcesCalculator;
+import com.sensors.philippe.sensorstest.Modele.RequestType;
 import com.sensors.philippe.sensorstest.R;
+
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity implements ChronometerListener, SensorEventListener{
 
@@ -46,6 +51,8 @@ public class MainActivity extends AppCompatActivity implements ChronometerListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        String a = String.valueOf(R.string.alert_alertText);
+
         tv_X = (TextView)findViewById(R.id.tv_X);
         tv_Y = (TextView)findViewById(R.id.tv_Y);
         tv_Z = (TextView)findViewById(R.id.tv_Z);
@@ -60,15 +67,27 @@ public class MainActivity extends AppCompatActivity implements ChronometerListen
         smanager = (SensorManager)getSystemService(SENSOR_SERVICE);
         accelerometer = smanager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
-        this.account = null;
+        if (savedInstanceState != null) {
+            String accountAsString = savedInstanceState.getString("ACCOUNT");
+            if (accountAsString != null) {
+                ObjectMapper mapper = new ObjectMapper();
+                try {
+                    this.account = mapper.readValue(accountAsString, Account.class);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                this.account = null;
+            }
+        }
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        //TODO Retirer ceci
-        startActivity(new Intent(getBaseContext(), AlertActivity.class));
-        //TODO Charger le dernier compte utilisé.
+        //TODO Retirer ceci.
+        //startActivity(new Intent(getBaseContext(), AlertActivity.class));
+        //TODO Retirer ceci.
         this.account = new Account("Awe", "AsYouCommand", "Tremblay", "Philippe", "00000000", 100, true);
     }
 
@@ -76,8 +95,8 @@ public class MainActivity extends AppCompatActivity implements ChronometerListen
     protected void onResume() {
         super.onResume();
         smanager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
-        refreshView();
         this.chronometer.start();
+        refreshView();
     }
 
     @Override
@@ -88,12 +107,10 @@ public class MainActivity extends AppCompatActivity implements ChronometerListen
 
     public void onClickBtnLogin(View view) {
 
-        if (this.btnLogin.getText().toString().equals(R.string.main_connectionBtnText_connected)) {
+        if (this.btnLogin.getText().toString().equals(getResources().getString(R.string.main_connectionBtnText_connected))) {
             this.account = null;
-        } else if (this.btnLogin.getText().toString().equals(R.string.main_connectionBtnText_notConnected)) {
-            //TODO Extraire les chaînes de caractères
-            //TODO Connecter l'utilisateur.
-            this.account = new Account("Awe", "AsYouCommand", "Tremblay", "Philippe", "00000000", 100, true);
+        } else if (this.btnLogin.getText().toString().equals(getResources().getString(R.string.main_connectionBtnText_notConnected))) {
+            startActivity(new Intent(getBaseContext(), LoginActivity.class));
         }
         refreshView();
     }
@@ -118,11 +135,6 @@ public class MainActivity extends AppCompatActivity implements ChronometerListen
     public void update(String id, long millisUntilFinished) {
         if (millisUntilFinished == 0)
             sensorToUpdate = true;
-    }
-
-    @Override
-    public void onFinish(String id) {
-
     }
 
     @Override
@@ -164,8 +176,10 @@ public class MainActivity extends AppCompatActivity implements ChronometerListen
         }
     }
 
+    @Override
+     public void onFinish(String id) {
 
-
+    }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {

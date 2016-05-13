@@ -1,5 +1,8 @@
 package com.sensors.philippe.sensorstest.Modele;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 public class Account {
 
     /**
@@ -10,7 +13,7 @@ public class Account {
     /**
      * Mot de passe de l'utilisateur.
      * */
-    private String passWord;
+    private String password;
 
     /**
      * Nom du propriétaire.
@@ -39,9 +42,9 @@ public class Account {
     public Account() {
     }
 
-    public Account(String accountID, String passWord, String name, String firstName, String emergencyNumber, float weight, boolean seatBeltAlwaysOn) {
+    public Account(String accountID, String password, String name, String firstName, String emergencyNumber, float weight, boolean seatBeltAlwaysOn) {
         this.accountID = accountID;
-        this.passWord = passWord;
+        this.password = password;
         this.name = name;
         this.firstName = firstName;
         this.emergencyNumber = emergencyNumber;
@@ -55,8 +58,8 @@ public class Account {
         return accountID;
     }
 
-    public String getPassWord() {
-        return passWord;
+    public String getPassword() {
+        return password;
     }
 
     public String getName() {
@@ -87,8 +90,8 @@ public class Account {
         this.accountID = accountID;
     }
 
-    public void setPassWord(String passWord) {
-        this.passWord = passWord;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public void setName(String name) {

@@ -7,11 +7,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sensors.philippe.sensorstest.Controleur.Validator;
 import com.sensors.philippe.sensorstest.Modele.Account;
+import com.sensors.philippe.sensorstest.Modele.DatabaseManager;
+import com.sensors.philippe.sensorstest.Modele.DatabaseManagerListener;
+import com.sensors.philippe.sensorstest.Modele.RequestType;
 import com.sensors.philippe.sensorstest.R;
 
-public class Inscription extends AppCompatActivity {
+public class Inscription extends AppCompatActivity implements DatabaseManagerListener {
 
     private EditText et_Identifiant;
     private EditText et_Password;
@@ -52,11 +57,23 @@ public class Inscription extends AppCompatActivity {
             if (Validator.validatePhoneNumber(phoneNumber)) {
                 if ((name.length() > 0) && (firstName.length() > 0)) {
                     if (weight > 0) {
-                        Account account = new Account(id, password, name, firstName, phoneNumber, weight, true);
-                        //TODO Ajouter le nouveau compte dans la base de données.
+                        try {
+                            ObjectMapper mapper = new ObjectMapper();
+                            String accountAsString = mapper.writeValueAsString(new Account(id, password, name, firstName, phoneNumber, weight, true));
+                            DatabaseManager.requestDatabase(this, RequestType.CREATE_ACCOUNT);
+                        } catch (JsonProcessingException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
+        }
+    }
+
+    @Override
+    public void requestResult(RequestType requestType, Object object) {
+        if (requestType == RequestType.CREATE_ACCOUNT) {
+            //TODO Appeler le main avec un extra pour connecter automatiquement l'utilisateur.
         }
     }
 }

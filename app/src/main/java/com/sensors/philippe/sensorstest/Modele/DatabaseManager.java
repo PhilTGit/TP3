@@ -5,12 +5,14 @@ public class DatabaseManager {
     public DatabaseManager() {
     }
 
-    public static void requestDatabase(DatabaseManagerListener listener, RequestType requestType) {
+    public static void requestDatabase(DatabaseManagerListener listener, RequestType requestType, Object... params) {
+        RequestDatabaseTask task = new RequestDatabaseTask();
         switch (requestType) {
             case CREATE_ACCOUNT:
-                RequestDatabaseTask task = new RequestDatabaseTask();
-                task.execute(listener, requestType);
+                task.execute(listener, requestType, params);
                 break;
+            case GET_ACCOUNT:
+                task.execute(listener, requestType, params);
             default:
                 //TODO exception.
         }
