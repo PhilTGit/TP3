@@ -2,6 +2,7 @@
     <string name="app_name">Accelerometer</string>
     <string name="inscription_returnBtnText">Return</string>
     <string name="inscription_IDEtText">Identifier:</string>
+    <string name="inscription_passwordEtText">Password:</string>
     <string name="inscription_nameEtText">Name:</string>
     <string name="inscription_firstNameEtText">First name:</string>
     <string name="inscription_weightEtText">Weight:</string>

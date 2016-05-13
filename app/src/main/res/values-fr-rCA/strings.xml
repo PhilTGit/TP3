@@ -2,6 +2,7 @@
 <resources>
     <string name="inscription_returnBtnText">Retour</string>
     <string name="inscription_IDEtText">Identifiant:</string>
+    <string name="inscription_passwordEtText">Mot de passe:</string>
     <string name="inscription_nameEtText">Nom:</string>
     <string name="inscription_firstNameEtText">Prénom:</string>
     <string name="inscription_weightEtText">Poids:</string>
