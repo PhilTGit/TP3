@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements ChronometerListen
     private Account account;
 
     //HIC>300 appeller, car environ un impact à 50km/h avec airbag
-    private static int HIC =300;
+    private static int HIC =700;
     //3300 Newtons est la force nécessaire pour avoir une chance sur 4 de briser une cote et
     //une quasi certidude de la félée.
     private static int FORCE_NEED_TO_CALL = 3300;

@@ -50,7 +50,7 @@ public class ForcesCalculatorTest {
         values[0]= "0";
         values[1]= "29.8";
         values[2]= "0";
-        Assert.assertEquals(50.0,ForcesCalculator.calculateHadInjuryCriterion(values));
+        Assert.assertEquals(219.0,ForcesCalculator.calculateHadInjuryCriterion(values));
 
     }
 }

@@ -37,7 +37,7 @@ public class ForcesCalculator {
 
         totalForcesOnBodyMinusGravity = totalForcesOnBodyMinusGravity.pow(5);
 
-       BigDecimal hic = BigDecimal.valueOf((0.15)*(((1/(0.15))* Math.sqrt(totalForcesOnBodyMinusGravity.doubleValue()*0.15))));
+       BigDecimal hic = BigDecimal.valueOf((0.015)*(((1/(0.015))* Math.sqrt(totalForcesOnBodyMinusGravity.doubleValue()*0.015))));
 
         return hic.longValue();
     }
