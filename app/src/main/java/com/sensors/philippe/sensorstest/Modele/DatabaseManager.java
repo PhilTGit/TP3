@@ -18,6 +18,18 @@ public class DatabaseManager {
         }
     }
 
+    public static void requestDatabaseForTest(DatabaseManagerListener listener, RequestType requestType,RequestDatabaseTask task) {
+        switch (requestType) {
+            case CREATE_ACCOUNT:
+                task.execute(listener, requestType);
+                break;
+            case GET_ACCOUNT:
+                task.execute(listener, requestType);
+            default:
+                //TODO exception.
+        }
+    }
+
     public static void requestResult(DatabaseManagerListener listener, RequestType requestType, Object object) {
         listener.requestResult(requestType, object);
     }
