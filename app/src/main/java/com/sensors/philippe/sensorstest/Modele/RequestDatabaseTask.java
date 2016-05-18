@@ -32,7 +32,7 @@ public class RequestDatabaseTask extends AsyncTask<Object, Integer, Object> {
         if (params.length >= 2) {
             this.setParamsFromParams(params);
 
-            String link = IP_ADRESS + "/" + DATABASE_NAME + "/";
+            String link = "http://" + IP_ADRESS + "/" + DATABASE_NAME + "/";
             HttpURLConnection connection = null;
             try {
                 switch (requestType) {
@@ -45,7 +45,7 @@ public class RequestDatabaseTask extends AsyncTask<Object, Integer, Object> {
 
                         OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream());
                         out.write((String)extras[0]);
-                        out.flush();
+                        //out.flush();
                         out.close();
 
                         int responseCode = connection.getResponseCode();
@@ -56,7 +56,7 @@ public class RequestDatabaseTask extends AsyncTask<Object, Integer, Object> {
                             //TODO Exception.
                         }
                     }
-                    return null;
+                    return (String)extras[0];
                     case GET_ACCOUNT:
                         link += "accounts/" + (String)extras[0];
                         connection = this.getConnection(link, "GET");

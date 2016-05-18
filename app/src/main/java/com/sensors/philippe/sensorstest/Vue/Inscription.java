@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -60,7 +61,7 @@ public class Inscription extends AppCompatActivity implements DatabaseManagerLis
                         try {
                             ObjectMapper mapper = new ObjectMapper();
                             String accountAsString = mapper.writeValueAsString(new Account(id, password, name, firstName, phoneNumber, weight, true));
-                            DatabaseManager.requestDatabase(this, RequestType.CREATE_ACCOUNT);
+                            DatabaseManager.requestDatabase(this, RequestType.CREATE_ACCOUNT, accountAsString);
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();
                         }
@@ -73,7 +74,18 @@ public class Inscription extends AppCompatActivity implements DatabaseManagerLis
     @Override
     public void requestResult(RequestType requestType, Object object) {
         if (requestType == RequestType.CREATE_ACCOUNT) {
-            //TODO Appeler le main avec un extra pour connecter automatiquement l'utilisateur.
+            if (object != null) {
+                String accountAsString = (String)object;
+                //TODO Appeler le main avec un extra pour connecter automatiquement l'utilisateur.
+                Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("ACCOUNT", accountAsString);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            } else {
+                Toast invalidInscriptionToast = Toast.makeText(getBaseContext(), R.string.inscription_invalidInscriptionToast, Toast.LENGTH_LONG);
+                invalidInscriptionToast.show();
+            }
         }
     }
 }

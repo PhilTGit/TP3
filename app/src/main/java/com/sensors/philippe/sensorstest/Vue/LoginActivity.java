@@ -41,10 +41,18 @@ public class LoginActivity extends AppCompatActivity implements DatabaseManagerL
     @Override
     public void requestResult(RequestType requestType, Object object) {
         if (requestType == RequestType.GET_ACCOUNT) {
-            Account account = (Account)object;
+            boolean validLogin = false;
+            Account account = new Account();
             ObjectMapper mapper = new ObjectMapper();
 
-            if (account.getPassword().equals(pass.getText().toString())) {
+            if (object != null) {
+                account = (Account) object;
+                if (account.getPassword().equals(pass.getText().toString())) {
+                    validLogin = true;
+                }
+            }
+
+            if (validLogin) {
                 Intent intent = new Intent(getBaseContext(), MainActivity.class);
 
                 try {

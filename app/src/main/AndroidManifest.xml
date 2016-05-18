@@ -19,6 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Vue.Inscription" />
+        <activity android:name=".Vue.LoginActivity" />
         <activity android:name=".Vue.AlertActivity"></activity>
     </application>
 

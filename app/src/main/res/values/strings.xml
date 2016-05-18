@@ -26,5 +26,6 @@
     <string name="callDone">, callDone: </string>
     <string name="yes">yes</string>
     <string name="no">no</string>
+    <string name="inscription_invalidInscriptionToast">Invalid inscription</string>
 
 </resources>
