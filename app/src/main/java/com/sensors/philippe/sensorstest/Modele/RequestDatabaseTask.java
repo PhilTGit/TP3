@@ -19,6 +19,15 @@ public class RequestDatabaseTask extends AsyncTask<Object, Integer, Object> {
     private final String IP_ADRESS = "10.200.76.175:8080";
     private final String DATABASE_NAME = "database";
 
+    public void setListener(DatabaseManagerListener listener) {
+        this.listener = listener;
+    }
+
+    public void setRequestType(RequestType requestType) {
+        this.requestType = requestType;
+    }
+
+
     private DatabaseManagerListener listener;
     private RequestType requestType;
     private Object[] extras;
@@ -74,6 +83,8 @@ public class RequestDatabaseTask extends AsyncTask<Object, Integer, Object> {
                                 //TODO Exception.
                             }
                         }
+                    case TEST:
+                        return true;
                 default:
                     //TODO Exception.
             }
