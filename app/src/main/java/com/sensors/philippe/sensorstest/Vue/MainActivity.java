@@ -67,8 +67,10 @@ public class MainActivity extends AppCompatActivity implements ChronometerListen
         smanager = (SensorManager)getSystemService(SENSOR_SERVICE);
         accelerometer = smanager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
-        if (savedInstanceState != null) {
-            String accountAsString = savedInstanceState.getString("ACCOUNT");
+        Bundle extras = this.getIntent().getExtras();
+
+        if (extras != null) {
+            String accountAsString = extras.getString("ACCOUNT");
             if (accountAsString != null) {
                 ObjectMapper mapper = new ObjectMapper();
                 try {
@@ -88,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements ChronometerListen
         //TODO Retirer ceci.
         //startActivity(new Intent(getBaseContext(), AlertActivity.class));
         //TODO Retirer ceci.
-        this.account = new Account("Awe", "AsYouCommand", "Tremblay", "Philippe", "00000000", 100, true);
+        //this.account = new Account("Awe", "AsYouCommand", "Tremblay", "Philippe", "00000000", 100, true);
     }
 
     @Override
@@ -155,10 +157,20 @@ public class MainActivity extends AppCompatActivity implements ChronometerListen
             tv_Z.setText("Z: " + ZForce);
             sensorToUpdate = false;
 
-            if(ForcesCalculator.calculateNforceOnBody(account.getWeight(),valueOfAccelerometer,
-                    account.isSeatBeltAlwaysOn()) >= FORCE_NEED_TO_CALL ||
-                    ForcesCalculator.calculateNforceOnBody(account.getWeight(),
-                            valueOfAccelerometer,account.isSeatBeltAlwaysOn()) == -1){
+            float weight;
+            boolean seatBeltAlwaysOn;
+            if (this.account != null) {
+                weight = account.getWeight();
+                seatBeltAlwaysOn = account.isSeatBeltAlwaysOn();
+            } else {
+                weight = 70;
+                seatBeltAlwaysOn = false;
+            }
+
+            if(ForcesCalculator.calculateNforceOnBody(weight, valueOfAccelerometer,
+                    seatBeltAlwaysOn) >= FORCE_NEED_TO_CALL ||
+                    ForcesCalculator.calculateNforceOnBody(weight,
+                            valueOfAccelerometer, seatBeltAlwaysOn) == -1){
 
 //                Intent alertIntent = new Intent(getApplicationContext(), AlertActivity.class);
 //                alertIntent.putExtra("PHONE_NUMBER",account.getEmergencyNumber());
@@ -183,6 +195,11 @@ public class MainActivity extends AppCompatActivity implements ChronometerListen
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+    }
+
+    //TODO Supprimer ceci
+    public void pretendCollision(View view) {
 
     }
 }
