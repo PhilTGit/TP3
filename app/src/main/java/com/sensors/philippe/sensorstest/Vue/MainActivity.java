@@ -171,18 +171,11 @@ public class MainActivity extends AppCompatActivity implements ChronometerListen
                     seatBeltAlwaysOn) >= FORCE_NEED_TO_CALL ||
                     ForcesCalculator.calculateNforceOnBody(weight,
                             valueOfAccelerometer, seatBeltAlwaysOn) == -1){
-
-//                Intent alertIntent = new Intent(getApplicationContext(), AlertActivity.class);
-//                alertIntent.putExtra("PHONE_NUMBER",account.getEmergencyNumber());
-//                startActivity(alertIntent);
                 //TODO enregistrer la collision
             }
 
             if(ForcesCalculator.calculateHeadInjuryCriterion(valueOfAccelerometer) >= HIC ||
                     ForcesCalculator.calculateHeadInjuryCriterion(valueOfAccelerometer) ==-1  ){
-                //Intent alertIntent = new Intent(getApplicationContext(), AlertActivity.class);
-//                alertIntent.putExtra("PHONE_NUMBER",account.getEmergencyNumber());
-//                startActivity(alertIntent);
                 //TODO enregistrer la collision
             }
         }
@@ -201,5 +194,11 @@ public class MainActivity extends AppCompatActivity implements ChronometerListen
     //TODO Supprimer ceci
     public void pretendCollision(View view) {
 
+    }
+
+    private void onCollision(){
+        Intent alertIntent = new Intent(getApplicationContext(), AlertActivity.class);
+        alertIntent.putExtra("PHONE_NUMBER",account.getEmergencyNumber());
+        startActivity(alertIntent);
     }
 }
