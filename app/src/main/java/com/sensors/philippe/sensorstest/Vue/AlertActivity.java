@@ -26,7 +26,7 @@ public class AlertActivity extends AppCompatActivity implements ChronometerListe
     public static final String TIMER_TIME_LEFT = "TIMER_TIME_LEFT";
 
     private TextView tv_timer;
-    private LinearLayout llayout_flashing;
+    private LinearLayout lLayout_flashing;
 
     private Chronometer callTimer;
 
@@ -47,8 +47,8 @@ public class AlertActivity extends AppCompatActivity implements ChronometerListe
             tv_timer.setText("30");
         }
 
-        llayout_flashing = (LinearLayout)findViewById(R.id.llayout_flashing);
-        llayout_flashing.setBackgroundColor(Color.parseColor("#ffffff"));
+        lLayout_flashing = (LinearLayout)findViewById(R.id.llayout_flashing);
+        lLayout_flashing.setBackgroundColor(Color.parseColor("#ffffff"));
 
         if(callTimer == null) {
             callTimer = new Chronometer(AUTO_CALL_TIMER, MILLIS_IN_FUTURE, COUNT_DOWN_INTERVAL, Chronometer.ChronometerType.FINITE, this);
@@ -128,7 +128,7 @@ public class AlertActivity extends AppCompatActivity implements ChronometerListe
     }
 
     private void refreshView(){
-        llayout_flashing.setBackgroundColor(this.bgcolors.get(this.bgColorCode));
+        lLayout_flashing.setBackgroundColor(this.bgcolors.get(this.bgColorCode));
     }
 
     private void updateBgColorCode() {
