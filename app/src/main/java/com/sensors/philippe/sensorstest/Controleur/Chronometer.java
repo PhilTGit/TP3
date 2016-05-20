@@ -8,14 +8,19 @@ public class Chronometer {
     private ChronometerType chronometerType;
     private ChronometerListener chronometerListener;
     private CountDownTimer timer;
+    private long timeUntilFinish = 0;
+    private long countDownInterval =0;
 
-    public Chronometer(final String id, final long millisInFuture, long countDownInterval, ChronometerType type, ChronometerListener listener) {
+    public Chronometer(final String id, final long millisInFuture, final long countDownInterval, ChronometerType type, ChronometerListener listener) {
         this.chronometerListener = listener;
         this.chronometerType = type;
+        this.timeUntilFinish = millisInFuture;
+        this.countDownInterval = countDownInterval;
         this.timer = new CountDownTimer(millisInFuture, countDownInterval) {
             @Override
             public void onTick(long millisUntilFinished) {
                 chronometerListener.update(id, millisUntilFinished);
+                timeUntilFinish -= countDownInterval;
             }
 
             @Override
@@ -31,5 +36,11 @@ public class Chronometer {
         this.timer.start();
     }
 
-    public void stop() {this.timer.cancel();}
+    public void stop() {
+        this.timer.cancel();
+    }
+
+    public long save(){
+        return  this.timeUntilFinish;
+    }
 }

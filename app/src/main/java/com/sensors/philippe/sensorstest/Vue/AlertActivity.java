@@ -1,16 +1,14 @@
 package com.sensors.philippe.sensorstest.Vue;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.sensors.philippe.sensorstest.Controleur.Chronometer;
 import com.sensors.philippe.sensorstest.Controleur.ChronometerListener;
@@ -23,6 +21,9 @@ public class AlertActivity extends AppCompatActivity implements ChronometerListe
 
     public static final String AUTO_CALL_TIMER = "autoCallTimer";
     public static final String FLASHING_TIMER = "flashingTimer";
+    public static final int MILLIS_IN_FUTURE = 30000;
+    public static final int COUNT_DOWN_INTERVAL = 1000;
+    public static final String TIMER_TIME_LEFT = "TIMER_TIME_LEFT";
 
     private TextView tv_timer;
     private LinearLayout llayout_flashing;
@@ -49,8 +50,9 @@ public class AlertActivity extends AppCompatActivity implements ChronometerListe
         llayout_flashing = (LinearLayout)findViewById(R.id.llayout_flashing);
         llayout_flashing.setBackgroundColor(Color.parseColor("#ffffff"));
 
-        callTimer = new Chronometer(AUTO_CALL_TIMER, 30000, 1000, Chronometer.ChronometerType.FINITE, this);
-
+        if(callTimer == null) {
+            callTimer = new Chronometer(AUTO_CALL_TIMER, MILLIS_IN_FUTURE, COUNT_DOWN_INTERVAL, Chronometer.ChronometerType.FINITE, this);
+        }
         backGroundTimer = new Chronometer(FLASHING_TIMER, 50, 50, Chronometer.ChronometerType.INFINITE, this);
         bgColorCode = 0;
         bgColorCodeDirection = -1;
@@ -64,6 +66,20 @@ public class AlertActivity extends AppCompatActivity implements ChronometerListe
         if (extras != null) {
              phoneNumber = extras.getString("PHONE_NUMBER");
         }
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        long timeToShipToTimer = savedInstanceState.getLong(TIMER_TIME_LEFT);
+        callTimer = new Chronometer(AUTO_CALL_TIMER, timeToShipToTimer, COUNT_DOWN_INTERVAL, Chronometer.ChronometerType.FINITE, this);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        long timeLeftToTimer = callTimer.save();
+        outState.putLong(TIMER_TIME_LEFT,timeLeftToTimer);
     }
 
     @Override
