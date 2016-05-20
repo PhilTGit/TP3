@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -25,6 +26,7 @@ public class Inscription extends AppCompatActivity implements DatabaseManagerLis
     private EditText et_FirstName;
     private EditText et_Weight;
     private EditText et_phoneNumber;
+    private CheckBox et_SeatbeltAlwaysOn;
 
     private Button btnBack;
     private Button btnConfirm;
@@ -40,6 +42,7 @@ public class Inscription extends AppCompatActivity implements DatabaseManagerLis
         et_FirstName = (EditText)findViewById(R.id.et_firstName);
         et_Weight = (EditText)findViewById(R.id.et_weight);
         et_phoneNumber = (EditText)findViewById(R.id.et_phoneNumber);
+        et_SeatbeltAlwaysOn = (CheckBox)findViewById(R.id.seatbelt);
     }
 
     public void onClickBtnBack(View view) {
@@ -52,6 +55,7 @@ public class Inscription extends AppCompatActivity implements DatabaseManagerLis
         String name = et_Name.getText().toString();
         String firstName = et_FirstName.getText().toString();
         String phoneNumber = et_phoneNumber.getText().toString();
+        Boolean seatBeltAlwaysOn = et_SeatbeltAlwaysOn.isChecked();
         float weight = Float.parseFloat(et_Weight.getText().toString());
 
         if (Validator.validateID(id)) {
@@ -60,7 +64,7 @@ public class Inscription extends AppCompatActivity implements DatabaseManagerLis
                     if (weight > 0) {
                         try {
                             ObjectMapper mapper = new ObjectMapper();
-                            String accountAsString = mapper.writeValueAsString(new Account(id, password, name, firstName, phoneNumber, weight, true));
+                            String accountAsString = mapper.writeValueAsString(new Account(id, password, name, firstName, phoneNumber, weight, seatBeltAlwaysOn));
                             DatabaseManager.requestDatabase(this, RequestType.CREATE_ACCOUNT, accountAsString);
                         } catch (JsonProcessingException e) {
                             e.printStackTrace();

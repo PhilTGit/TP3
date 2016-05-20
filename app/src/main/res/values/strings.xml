@@ -5,7 +5,7 @@
     <string name="inscription_passwordEtText">Password:</string>
     <string name="inscription_nameEtText">Name:</string>
     <string name="inscription_firstNameEtText">First name:</string>
-    <string name="inscription_weightEtText">Weight:</string>
+    <string name="inscription_weightEtText">Weight in Kg:</string>
     <string name="inscription_phoneNumberEtText">Emergency phone number:</string>
     <string name="inscription_confirmBtnText">Confirm</string>
     <string name="inscription_cancelBtnText">Cancel</string>
@@ -27,5 +27,6 @@
     <string name="yes">yes</string>
     <string name="no">no</string>
     <string name="inscription_invalidInscriptionToast">Invalid inscription</string>
+    <string name="seatbelt_always_on">Seatbelt always on</string>
 
 </resources>
