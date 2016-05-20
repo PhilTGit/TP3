@@ -11,10 +11,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sensors.philippe.sensorstest.Controleur.Chronometer;
 import com.sensors.philippe.sensorstest.Controleur.ChronometerListener;
 import com.sensors.philippe.sensorstest.Modele.Account;
+import com.sensors.philippe.sensorstest.Modele.Collision;
+import com.sensors.philippe.sensorstest.Modele.DatabaseManager;
 import com.sensors.philippe.sensorstest.Modele.DatabaseManagerListener;
 import com.sensors.philippe.sensorstest.Modele.ForcesCalculator;
 import com.sensors.philippe.sensorstest.Modele.RequestType;
@@ -22,7 +25,7 @@ import com.sensors.philippe.sensorstest.R;
 
 import java.io.IOException;
 
-public class MainActivity extends AppCompatActivity implements ChronometerListener, SensorEventListener{
+public class MainActivity extends AppCompatActivity implements ChronometerListener, SensorEventListener, DatabaseManagerListener{
 
     private TextView tv_X;
     private TextView tv_Y;
@@ -200,6 +203,19 @@ public class MainActivity extends AppCompatActivity implements ChronometerListen
 
     //TODO Supprimer ceci
     public void pretendCollision(View view) {
+        Collision falseCollision = new Collision(new java.sql.Date(1L), 765, "Awe", true);
+        ObjectMapper mapper = new ObjectMapper();
+        String accountAsString = "";
+        try {
+            accountAsString = mapper.writeValueAsString(falseCollision);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        DatabaseManager.requestDatabase(this, RequestType.CREATE_COLLISION, accountAsString);
+    }
 
+    @Override
+    public void requestResult(RequestType requestType, Object object) {
+        
     }
 }

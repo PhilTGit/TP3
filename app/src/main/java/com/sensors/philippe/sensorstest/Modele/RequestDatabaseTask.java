@@ -91,6 +91,30 @@ public class RequestDatabaseTask extends AsyncTask<Object, Integer, Object> {
                                 //TODO Exception.
                             }
                         }
+                    case CREATE_COLLISION:
+                        link += "collisions/";
+                        connection = this.getConnection(link, "PUT");
+                        if (connection != null) {
+                            connection.setRequestProperty("Accept", "application/json");
+                            connection.setRequestProperty("Content-Type", "application/json");
+                            connection.setDoOutput(true);
+                            connection.setDoInput(true);
+
+                            OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream());
+                            out.write((String)extras[0]);
+                            //out.flush();
+                            out.close();
+
+                            int responseCode = connection.getResponseCode();
+                            String response = convertStreamToString(connection.getInputStream());
+
+                            connection.disconnect();
+
+                            if (responseCode == 500) {
+                                //TODO Exception.
+                            }
+                        }
+                        return (String)extras[0];
                     case TEST:
                         return true;
                 default:

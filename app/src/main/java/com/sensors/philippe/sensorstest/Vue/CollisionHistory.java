@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.sensors.philippe.sensorstest.Modele.Colision;
+import com.sensors.philippe.sensorstest.Modele.Collision;
 import com.sensors.philippe.sensorstest.R;
 
 import static com.sensors.philippe.sensorstest.R.layout.list_view;
@@ -14,7 +14,7 @@ public class CollisionHistory extends AppCompatActivity {
 
     private static final String INTENT_KEY ="COLLISIONS" ;
     public static final String COLLISIONS_LIST = "COLLISIONS_LIST";
-    private Colision[] colisionsList;
+    private Collision[] colisionsList;
     private String[] colisionsListFormated = null;
     private ArrayAdapter<String> adapter;
     private ListView listViewToHoldCollision;
@@ -37,7 +37,7 @@ public class CollisionHistory extends AppCompatActivity {
     if(colisionsListFormated == null) {
 
         if (extras != null) {
-        colisionsList = (Colision[]) extras.get(INTENT_KEY);
+        colisionsList = (Collision[]) extras.get(INTENT_KEY);
         }
 
         colisionsListFormated = new String[colisionsList.length];
