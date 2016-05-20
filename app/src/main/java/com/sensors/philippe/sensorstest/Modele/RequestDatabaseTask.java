@@ -7,6 +7,8 @@ import android.os.AsyncTask;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -16,7 +18,8 @@ import java.net.URL;
 
 public class RequestDatabaseTask extends AsyncTask<Object, Integer, Object> {
 
-    private final String IP_ADRESS = "10.200.76.175:8080";
+    //10.200.76.175:8080
+    private final String IP_ADRESS = "10.0.2.2:8080";
     private final String DATABASE_NAME = "database";
 
     public void setListener(DatabaseManagerListener listener) {
@@ -50,7 +53,9 @@ public class RequestDatabaseTask extends AsyncTask<Object, Integer, Object> {
                     connection = this.getConnection(link, "PUT");
                     if (connection != null) {
                         connection.setRequestProperty("Accept", "application/json");
+                        connection.setRequestProperty("Content-Type", "application/json");
                         connection.setDoOutput(true);
+                        connection.setDoInput(true);
 
                         OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream());
                         out.write((String)extras[0]);
@@ -58,6 +63,7 @@ public class RequestDatabaseTask extends AsyncTask<Object, Integer, Object> {
                         out.close();
 
                         int responseCode = connection.getResponseCode();
+                        String response = convertStreamToString(connection.getInputStream());
 
                         connection.disconnect();
 
@@ -73,11 +79,13 @@ public class RequestDatabaseTask extends AsyncTask<Object, Integer, Object> {
                             connection.connect();
 
                             ObjectMapper mapper = new ObjectMapper();
-                            Account acc = mapper.readValue(connection.getInputStream(), Account.class);
+                            String accountAsString = convertStreamToString(connection.getInputStream());
+                            Account acc = mapper.readValue(accountAsString, Account.class);
 
+                            int responseCode = connection.getResponseCode();
                             connection.disconnect();
 
-                            if (acc != null) {
+                            if (acc != null || responseCode > 200) {
                                 return acc;
                             } else {
                                 //TODO Exception.
@@ -117,7 +125,7 @@ public class RequestDatabaseTask extends AsyncTask<Object, Integer, Object> {
         try {
             URL url = new URL(link);
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
-            connection.setRequestMethod("PUT");
+            connection.setRequestMethod(requestMethod);
             return connection;
         } catch (ProtocolException e) {
             e.printStackTrace();
@@ -127,5 +135,10 @@ public class RequestDatabaseTask extends AsyncTask<Object, Integer, Object> {
             e.printStackTrace();
         }
         return null;
+    }
+
+    String convertStreamToString(java.io.InputStream is) {
+        java.util.Scanner s = new java.util.Scanner(is).useDelimiter("\\A");
+        return s.hasNext() ? s.next() : "";
     }
 }
