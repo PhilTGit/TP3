@@ -29,6 +29,7 @@
     <string name="no">no</string>
     <string name="inscription_invalidInscriptionToast">Invalid inscription</string>
     <string name="seatbelt_always_on">Seatbelt always on</string>
+    <string name="invalidAccountToast">Account is invalid</string>
 
 
 </resources>

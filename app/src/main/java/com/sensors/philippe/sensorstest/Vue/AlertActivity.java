@@ -123,7 +123,6 @@ public class AlertActivity extends AppCompatActivity implements ChronometerListe
      * #region Gestion du flash de l'écran
      * */
     public void onClickCancelBtn(View view) {
-        //TODO Retourner à la page principale. Enregistrer la collision quand même en indiquant que l'appel a été annulé.
         startActivity(new Intent(getBaseContext(), MainActivity.class));
     }
 
@@ -163,7 +162,7 @@ public class AlertActivity extends AppCompatActivity implements ChronometerListe
      * Passe l'appel au service d'urgence choisie par l'utilisateur.
      */
     private void makeCall(){
-
+        setColissionCallMade();
 
         Intent in = new Intent(Intent.ACTION_CALL, Uri.parse(phoneNumber));
         try{
@@ -172,6 +171,10 @@ public class AlertActivity extends AppCompatActivity implements ChronometerListe
 
         catch (android.content.ActivityNotFoundException ex){
         }
+    }
+
+    private void setColissionCallMade(){
+        //TODO Modifier l'entré de la collision  pour enregistrer que l'appel fut fait.
     }
     }
 

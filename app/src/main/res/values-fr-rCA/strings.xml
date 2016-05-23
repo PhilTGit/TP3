@@ -29,6 +29,7 @@
     <string name="no">non</string>
     <string name="inscription_invalidInscriptionToast">Invalid inscription</string>
     <string name="seatbelt_always_on">Ceinture de sécurité toujours attachée</string>
+    <string name="invalidAccountToast">Ce compte utilisateur est invalide</string>
 
 
 </resources>
