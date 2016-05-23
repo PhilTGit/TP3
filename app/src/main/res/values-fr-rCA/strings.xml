@@ -14,6 +14,7 @@
     <string name="main_connectionBtnText_notConnected">Se connecter</string>
     <string name="main_connectionBtnText_connected">Déconnexion</string>
     <string name="main_idText_notConnected">Non connecter</string>
+    <string name="main_btnMyCollisions_text">Mes collisions</string>
 
     <string name="alert_alertText">Alerte</string>
     <string name="alert_callingNow">Appel maintenant!</string>
@@ -28,5 +29,6 @@
     <string name="no">non</string>
     <string name="inscription_invalidInscriptionToast">Invalid inscription</string>
     <string name="seatbelt_always_on">Ceinture de sécurité toujours attachée</string>
+
 
 </resources>

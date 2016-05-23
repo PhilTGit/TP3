@@ -14,6 +14,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class RequestDatabaseTask extends AsyncTask<Object, Integer, Object> {
@@ -115,6 +117,26 @@ public class RequestDatabaseTask extends AsyncTask<Object, Integer, Object> {
                             }
                         }
                         return (String)extras[0];
+                    case GET_COLLISIONS:
+                        link += "collisions/" + (String)extras[0];
+                        connection = this.getConnection(link, "GET");
+                        if (connection != null) {
+                            connection.connect();
+
+                            ObjectMapper mapper = new ObjectMapper();
+                            String accountAsString = convertStreamToString(connection.getInputStream());
+                            List<Collision> collisions = mapper.readValue(accountAsString,
+                                    mapper.getTypeFactory().constructCollectionType(ArrayList.class, Collision.class));
+
+                            int responseCode = connection.getResponseCode();
+                            connection.disconnect();
+
+                            if (collisions != null || responseCode > 200) {
+                                return collisions;
+                            } else {
+                                //TODO Exception.
+                            }
+                        }
                     case TEST:
                         return true;
                 default:

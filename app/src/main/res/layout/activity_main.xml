@@ -80,4 +80,12 @@
             android:text="Pretend a collision"/>
     </LinearLayout>
 
+    <Button
+        android:id="@+id/btnCollisions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start|bottom"
+        android:onClick="onClickBtnCollisions"
+        android:text="@string/main_btnMyCollisions_text"/>
+
 </android.support.design.widget.CoordinatorLayout>

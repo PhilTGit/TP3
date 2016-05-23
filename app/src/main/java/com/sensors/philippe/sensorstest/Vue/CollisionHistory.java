@@ -8,45 +8,44 @@ import android.widget.ListView;
 import com.sensors.philippe.sensorstest.Modele.Collision;
 import com.sensors.philippe.sensorstest.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.sensors.philippe.sensorstest.R.layout.list_view;
 
 public class CollisionHistory extends AppCompatActivity {
 
-    private static final String INTENT_KEY ="COLLISIONS" ;
-    public static final String COLLISIONS_LIST = "COLLISIONS_LIST";
-    private Collision[] colisionsList;
-    private String[] colisionsListFormated = null;
+    private static final String COLLISIONS ="COLLISIONS" ;
+    public static final String SAVED_COLLISIONS_LIST = "COLLISIONS_LIST";
+    private List<Collision> colisionsList;
+    private List<String> colisionsListFormated = null;
     private ArrayAdapter<String> adapter;
     private ListView listViewToHoldCollision;
 //    FragmentManager fragmentManager = getFragmentManager();
 //    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putStringArray(COLLISIONS_LIST,colisionsListFormated);
 
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         Bundle extras = getIntent().getExtras();
-        colisionsListFormated = savedInstanceState.getStringArray(COLLISIONS_LIST);
-    if(colisionsListFormated == null) {
+        colisionsListFormated = savedInstanceState.getStringArrayList(SAVED_COLLISIONS_LIST);
 
-        if (extras != null) {
-        colisionsList = (Collision[]) extras.get(INTENT_KEY);
+        if(colisionsListFormated == null) {
+
+            if (extras != null) {
+                colisionsList = (ArrayList<Collision>)extras.get(COLLISIONS);
+            }
+
+            colisionsListFormated = new ArrayList<>();
+
+            for (int i = 0; i < colisionsList.size(); i++) {
+                colisionsListFormated.set(i, colisionsList.get(i).toString());
+            }
         }
-
-        colisionsListFormated = new String[colisionsList.length];
-
-        for (int i = 0; i < colisionsList.length; i++) {
-            colisionsListFormated[i] = colisionsList[i].toString();
-        }
-    }
-        adapter = new ArrayAdapter<String>(this,list_view,colisionsListFormated);
+        adapter = new ArrayAdapter<String>(this, list_view, colisionsListFormated);
 
         listViewToHoldCollision = (ListView) findViewById(R.id.collision_list);
 
@@ -73,5 +72,13 @@ public class CollisionHistory extends AppCompatActivity {
 //                fragmentTransaction.add(i,fragmentCollision,"");
 //            }
 //        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        ArrayList<String> castedList = (ArrayList<String>) colisionsListFormated;
+        outState.putStringArrayList(SAVED_COLLISIONS_LIST, castedList);
+
     }
 }

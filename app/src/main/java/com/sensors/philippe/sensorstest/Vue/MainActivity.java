@@ -124,6 +124,10 @@ public class MainActivity extends AppCompatActivity implements ChronometerListen
         startActivity(new Intent(getApplicationContext(), Inscription.class));
     }
 
+    public void onClickBtnCollisions(View view) {
+
+    }
+
     private void refreshView(){
         if (this.account != null) {
             this.login.setText(this.account.getAccountID());
@@ -209,7 +213,9 @@ public class MainActivity extends AppCompatActivity implements ChronometerListen
 
     @Override
     public void requestResult(RequestType requestType, Object object) {
-        
+        if (requestType == RequestType.CREATE_COLLISION) {
+            int i = 0;
+        }
     }
 
     private void onCollision(){
@@ -217,4 +223,6 @@ public class MainActivity extends AppCompatActivity implements ChronometerListen
         alertIntent.putExtra("PHONE_NUMBER",account.getEmergencyNumber());
         startActivity(alertIntent);
     }
+
+
 }
