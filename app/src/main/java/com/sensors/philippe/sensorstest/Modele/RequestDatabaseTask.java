@@ -123,16 +123,13 @@ public class RequestDatabaseTask extends AsyncTask<Object, Integer, Object> {
                         if (connection != null) {
                             connection.connect();
 
-                            ObjectMapper mapper = new ObjectMapper();
                             String accountAsString = convertStreamToString(connection.getInputStream());
-                            List<Collision> collisions = mapper.readValue(accountAsString,
-                                    mapper.getTypeFactory().constructCollectionType(ArrayList.class, Collision.class));
 
                             int responseCode = connection.getResponseCode();
                             connection.disconnect();
 
-                            if (collisions != null || responseCode > 200) {
-                                return collisions;
+                            if (accountAsString != null || responseCode > 200) {
+                                return accountAsString;
                             } else {
                                 //TODO Exception.
                             }

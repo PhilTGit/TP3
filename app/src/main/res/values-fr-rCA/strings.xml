@@ -9,6 +9,8 @@
     <string name="inscription_phoneNumberEtText">Numéro de téléphone d\'urgence:</string>
     <string name="inscription_confirmBtnText">Confirmer</string>
     <string name="inscription_cancelBtnText">Annuler</string>
+    <string name="inscription_invalidInscriptionToast">Invalid inscription</string>
+    <string name="seatbelt_always_on">Ceinture de sécurité toujours attachée</string>
 
     <string name="main_registerBtnText">S\'inscrire</string>
     <string name="main_connectionBtnText_notConnected">Se connecter</string>
@@ -16,20 +18,16 @@
     <string name="main_idText_notConnected">Non connecter</string>
     <string name="main_btnMyCollisions_text">Mes collisions</string>
 
-    <string name="alert_alertText">Alerte</string>
-    <string name="alert_callingNow">Appel maintenant!</string>
     <string name="collisionFrag_collisionDate">Date:</string>
     <string name="collisionFrag_collisionStrength">Force:</string>
     <string name="collisionFrag_collisionEmergency">Services d\'urgences appelés:</string>
-    <string name="collisionDate">Date de la collision: </string>
-    <string name="collisionStrength">,Force de la collision: </string>
-    <string name="collisionOwner">, Victime: </string>
-    <string name="callDone">, Les secours furent appellés: </string>
-    <string name="yes">oui</string>
-    <string name="no">non</string>
-    <string name="inscription_invalidInscriptionToast">Invalid inscription</string>
-    <string name="seatbelt_always_on">Ceinture de sécurité toujours attachée</string>
-    <string name="invalidAccountToast">Ce compte utilisateur est invalide</string>
+    <string name="collisionOwner">Victime: </string>
+    <string name="yes">Oui</string>
+    <string name="no">Non</string>
 
+    <string name="alert_alertText">Alerte</string>
+    <string name="alert_callingNow">Appel maintenant!</string>
+
+    <string name="invalidAccountToast">Ce compte utilisateur est invalide</string>
 
 </resources>

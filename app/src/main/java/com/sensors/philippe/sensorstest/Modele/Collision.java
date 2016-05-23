@@ -1,5 +1,7 @@
 package com.sensors.philippe.sensorstest.Modele;
 
+import android.content.res.Resources;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sensors.philippe.sensorstest.R;
 
@@ -11,6 +13,9 @@ public class Collision {
     private double collisionStrength;
     private String collisionOwner;
     private boolean callDone;
+
+    public Collision() {
+    }
 
     public Collision(java.sql.Date collisionDate, double collisionStrength, String collisionOwner, boolean callDone) {
 
@@ -32,23 +37,21 @@ public class Collision {
         return collisionStrength;
     }
 
-    @Override
-    public String toString() {
-        String toReturn = String.valueOf(R.string.collisionOwner) + collisionOwner
-                +String.valueOf(R.string.collisionDate) + collisionDate +
-                String.valueOf(R.string.collisionStrength) + collisionStrength +
-                String.valueOf(R.string.callDone);
+
+    public String toString(Resources res) {
+        String toReturn = res.getString(R.string.collisionFrag_collisionOwner) + collisionOwner +"\n" +
+                res.getString(R.string.collisionFrag_collisionDate) + collisionDate +"\n" +
+                res.getString(R.string.collisionFrag_collisionStrength) + collisionStrength +"\n" +
+                res.getString(R.string.collisionFrag_collisionEmergency);
 
         if(callDone){
-            toReturn+= String.valueOf(R.string.yes) +"/n";
+            toReturn+= res.getString(R.string.yes);
         }
         else{
-            toReturn+= String.valueOf(R.string.no)+"/n";
+            toReturn+= res.getString(R.string.no);
         }
 
         return toReturn;
-
-
     }
 
     public void setcollisionStrength(double collisionStrength) {

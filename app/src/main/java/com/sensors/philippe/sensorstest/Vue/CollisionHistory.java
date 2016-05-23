@@ -5,9 +5,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sensors.philippe.sensorstest.Modele.Collision;
 import com.sensors.philippe.sensorstest.R;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,8 +19,8 @@ public class CollisionHistory extends AppCompatActivity {
 
     private static final String COLLISIONS ="COLLISIONS" ;
     public static final String SAVED_COLLISIONS_LIST = "COLLISIONS_LIST";
-    private List<Collision> colisionsList;
-    private List<String> colisionsListFormated = null;
+    private List<Collision> collisionsList;
+    private List<String> collisionsListFormated = null;
     private ArrayAdapter<String> adapter;
     private ListView listViewToHoldCollision;
 //    FragmentManager fragmentManager = getFragmentManager();
@@ -29,55 +31,49 @@ public class CollisionHistory extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_collision_history);
 
         Bundle extras = getIntent().getExtras();
-        colisionsListFormated = savedInstanceState.getStringArrayList(SAVED_COLLISIONS_LIST);
 
-        if(colisionsListFormated == null) {
+
+        if(savedInstanceState == null) {
 
             if (extras != null) {
-                colisionsList = (ArrayList<Collision>)extras.get(COLLISIONS);
+                ObjectMapper mapper = new ObjectMapper();
+                String accountAsString = extras.getString(COLLISIONS);
+                try {
+                    collisionsList = mapper.readValue(accountAsString,
+                            mapper.getTypeFactory().constructCollectionType(ArrayList.class, Collision.class));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
-            colisionsListFormated = new ArrayList<>();
+            collisionsListFormated = new ArrayList<>();
 
-            for (int i = 0; i < colisionsList.size(); i++) {
-                colisionsListFormated.set(i, colisionsList.get(i).toString());
+            for (int i = 0; i < collisionsList.size(); i++) {
+                collisionsListFormated.add(collisionsList.get(i).toString(getResources()));
             }
         }
-        adapter = new ArrayAdapter<String>(this, list_view, colisionsListFormated);
-
-        listViewToHoldCollision = (ListView) findViewById(R.id.collision_list);
-
-        if (listViewToHoldCollision != null) {
-            listViewToHoldCollision.setAdapter(adapter);
+        else {
+            collisionsListFormated = savedInstanceState.getStringArrayList(SAVED_COLLISIONS_LIST);
         }
 
-//        setContentView(R.layout.activity_collision_history);
-//        LinearLayout layout = (LinearLayout)findViewById(R.id.linear);
-//        if (colisionsList != null) {
-//            for (int i=0;i<colisionsList.length;i++){
-//                FrameLayout frame = new FrameLayout(this);
-//                frame.setId(i);
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-//                    frame.setLayoutMode(FrameLayout.LayoutParams.WRAP_CONTENT);
-//                }
-//                FragmentCollision fragmentCollision = new FragmentCollision();
-//                fragmentCollision.setDefaultArguements(colisionsList[i].getColisionOwner(),
-//                        colisionsList[i].getColisionDate(), (float) colisionsList[i].getColisionStrength(),
-//                        colisionsList[i].isCallDone());
-//                if (layout != null) {
-//                    layout.addView(frame);
-//                }
-//                fragmentTransaction.add(i,fragmentCollision,"");
-//            }
-//        }
+        if (collisionsListFormated != null) {
+            adapter = new ArrayAdapter<String>(this, list_view, collisionsListFormated);
+
+            listViewToHoldCollision = (ListView) findViewById(R.id.collision_list);
+
+            if (listViewToHoldCollision != null) {
+                listViewToHoldCollision.setAdapter(adapter);
+            }
+        }
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        ArrayList<String> castedList = (ArrayList<String>) colisionsListFormated;
+        ArrayList<String> castedList = (ArrayList<String>) collisionsListFormated;
         outState.putStringArrayList(SAVED_COLLISIONS_LIST, castedList);
 
     }

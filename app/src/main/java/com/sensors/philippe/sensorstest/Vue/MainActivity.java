@@ -24,6 +24,8 @@ import com.sensors.philippe.sensorstest.Modele.RequestType;
 import com.sensors.philippe.sensorstest.R;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements ChronometerListener, SensorEventListener, DatabaseManagerListener{
 
@@ -125,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements ChronometerListen
     }
 
     public void onClickBtnCollisions(View view) {
-
+        DatabaseManager.requestDatabase(this, RequestType.GET_COLLISIONS, this.account.getAccountID());
     }
 
     private void refreshView(){
@@ -213,7 +215,17 @@ public class MainActivity extends AppCompatActivity implements ChronometerListen
 
     @Override
     public void requestResult(RequestType requestType, Object object) {
-        if (requestType == RequestType.CREATE_COLLISION) {
+        if (requestType == RequestType.GET_COLLISIONS) {
+            if (object != null) {
+                String collisions = (String) object;
+                Intent intent = new Intent(getBaseContext(), CollisionHistory.class);
+                Bundle extras = new Bundle();
+                extras.putString("COLLISIONS", collisions);
+                intent.putExtras(extras);
+                startActivity(intent);
+            }
+        }
+        else if (requestType == RequestType.CREATE_COLLISION) {
             int i = 0;
         }
     }
