@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -63,7 +64,8 @@ public class LoginActivity extends AppCompatActivity implements DatabaseManagerL
 
                 startActivity(intent);
             } else {
-                //TODO Toast pour indiquer que l'accompte est invalide.
+                Toast.makeText(this, R.string.invalidAccountToast,
+                        Toast.LENGTH_LONG).show();
                 pass.setText("");
             }
         }
