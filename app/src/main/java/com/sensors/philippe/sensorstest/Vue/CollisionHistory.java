@@ -1,7 +1,9 @@
 package com.sensors.philippe.sensorstest.Vue;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -19,6 +21,10 @@ public class CollisionHistory extends AppCompatActivity {
 
     private static final String COLLISIONS ="COLLISIONS" ;
     public static final String SAVED_COLLISIONS_LIST = "COLLISIONS_LIST";
+    public static final String ACCOUNT = "ACCOUNT";
+
+    private String accountAsString;
+
     private List<Collision> collisionsList;
     private List<String> collisionsListFormated = null;
     private ArrayAdapter<String> adapter;
@@ -34,15 +40,17 @@ public class CollisionHistory extends AppCompatActivity {
         setContentView(R.layout.activity_collision_history);
 
         Bundle extras = getIntent().getExtras();
+        extras.getString(ACCOUNT);
 
 
         if(savedInstanceState == null) {
 
             if (extras != null) {
                 ObjectMapper mapper = new ObjectMapper();
-                String accountAsString = extras.getString(COLLISIONS);
+                String collisionsAsString = extras.getString(COLLISIONS);
+                accountAsString = extras.getString(ACCOUNT);
                 try {
-                    collisionsList = mapper.readValue(accountAsString,
+                    collisionsList = mapper.readValue(collisionsAsString,
                             mapper.getTypeFactory().constructCollectionType(ArrayList.class, Collision.class));
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -76,5 +84,18 @@ public class CollisionHistory extends AppCompatActivity {
         ArrayList<String> castedList = (ArrayList<String>) collisionsListFormated;
         outState.putStringArrayList(SAVED_COLLISIONS_LIST, castedList);
 
+    }
+
+    public void onClickBtnBack(View view) {
+        Intent intent = new Intent(getBaseContext(), MainActivity.class);
+
+        if (accountAsString != null) {
+            Bundle bundle = new Bundle();
+            bundle.putString("ACCOUNT", accountAsString);
+            intent.putExtras(bundle);
+
+        }
+
+        startActivity(intent);
     }
 }

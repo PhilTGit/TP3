@@ -24,10 +24,15 @@ import com.sensors.philippe.sensorstest.Modele.RequestType;
 import com.sensors.philippe.sensorstest.R;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements ChronometerListener, SensorEventListener, DatabaseManagerListener{
+
+    public static final String COLLISION_STRENGTH = "COLLISION_STRENGTH";
+    public static final String COLLISION_CALLDONE = "COLLISION_CALLDONE";
+    public static final int ALERT_REQUEST_CODE = 1;
 
     private TextView tv_X;
     private TextView tv_Y;
@@ -101,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements ChronometerListen
     @Override
     protected void onResume() {
         super.onResume();
-        smanager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+        smanager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_FASTEST);
         this.chronometer.start();
         refreshView();
     }
@@ -150,43 +155,69 @@ public class MainActivity extends AppCompatActivity implements ChronometerListen
 
     @Override
     public void onSensorChanged(SensorEvent event) {
+        String XForce = Float.toString(event.values[0]);
+        String YForce = Float.toString(event.values[1]);
+        String ZForce = Float.toString(event.values[2]);
+
+        String[] valueOfAccelerometer = new String[3];
+        valueOfAccelerometer[0] = XForce;
+        valueOfAccelerometer[1] = YForce;
+        valueOfAccelerometer[2] = ZForce;
+
         if (sensorToUpdate) {
-
-            String XForce = Float.toString(event.values[0]);
-            String YForce = Float.toString(event.values[1]);
-            String ZForce = Float.toString(event.values[2]);
-
-            String[] valueOfAccelerometer = new String[3];
-            valueOfAccelerometer[0] = XForce;
-            valueOfAccelerometer[1] = YForce;
-            valueOfAccelerometer[2] = ZForce;
-
             tv_X.setText("X: " + XForce);
             tv_Y.setText("Y: " + YForce);
             tv_Z.setText("Z: " + ZForce);
             sensorToUpdate = false;
+        }
 
-            float weight;
-            boolean seatBeltAlwaysOn;
-            if (this.account != null) {
-                weight = account.getWeight();
-                seatBeltAlwaysOn = account.isSeatBeltAlwaysOn();
-            } else {
-                weight = 70;
-                seatBeltAlwaysOn = false;
-            }
+        float weight;
+        double nForce;
+        double hic;
+        boolean seatBeltAlwaysOn;
+        boolean callAlert = false;
+        if (this.account != null) {
+            weight = account.getWeight();
+            seatBeltAlwaysOn = account.isSeatBeltAlwaysOn();
+        } else {
+            weight = 70;
+            seatBeltAlwaysOn = false;
+        }
 
-            if(ForcesCalculator.calculateNforceOnBody(weight, valueOfAccelerometer,
-                    seatBeltAlwaysOn) >= FORCE_NEED_TO_CALL ||
-                    ForcesCalculator.calculateNforceOnBody(weight,
-                            valueOfAccelerometer, seatBeltAlwaysOn) == -1){
-                //TODO enregistrer la collision
-            }
+        nForce = ForcesCalculator.calculateNforceOnBody(weight, valueOfAccelerometer, seatBeltAlwaysOn);
+        hic = ForcesCalculator.calculateHeadInjuryCriterion(valueOfAccelerometer);
 
-            if(ForcesCalculator.calculateHeadInjuryCriterion(valueOfAccelerometer) >= HIC ||
-                    ForcesCalculator.calculateHeadInjuryCriterion(valueOfAccelerometer) ==-1  ){
-                //TODO enregistrer la collision
-            }
+        if(nForce >= FORCE_NEED_TO_CALL || nForce == -1)
+            callAlert = true;
+        else if(hic >= HIC || hic ==-1  )
+            callAlert = true;
+
+        if (callAlert) {
+            Intent alertIntent = new Intent(getBaseContext(), AlertActivity.class);
+            Bundle b = new Bundle();
+            b.putDouble(MainActivity.COLLISION_STRENGTH, nForce);
+            startActivityForResult(alertIntent, ALERT_REQUEST_CODE);
+        }
+    }
+
+    private void saveCollision (float strength, boolean callDone) {
+        Collision newCollision = new Collision(new java.sql.Date(System.currentTimeMillis()),
+                                               strength, this.account.getAccountID(), callDone);
+        ObjectMapper mapper = new ObjectMapper();
+        String accountAsString = "";
+        try {
+            accountAsString = mapper.writeValueAsString(newCollision);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        DatabaseManager.requestDatabase(this, RequestType.CREATE_COLLISION, accountAsString);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == ALERT_REQUEST_CODE) {
+            Bundle extras = data.getExtras();
+            saveCollision(extras.getFloat(COLLISION_STRENGTH), extras.getBoolean(COLLISION_CALLDONE));
         }
     }
 
@@ -220,7 +251,17 @@ public class MainActivity extends AppCompatActivity implements ChronometerListen
                 String collisions = (String) object;
                 Intent intent = new Intent(getBaseContext(), CollisionHistory.class);
                 Bundle extras = new Bundle();
+                ObjectMapper mapper = new ObjectMapper();
+
+                String accountAsString = null;
+                try {
+                    accountAsString = mapper.writeValueAsString(this.account);
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace();
+                }
+
                 extras.putString("COLLISIONS", collisions);
+                extras.putString(CollisionHistory.ACCOUNT, accountAsString);
                 intent.putExtras(extras);
                 startActivity(intent);
             }
@@ -232,7 +273,7 @@ public class MainActivity extends AppCompatActivity implements ChronometerListen
 
     private void onCollision(){
         Intent alertIntent = new Intent(getApplicationContext(), AlertActivity.class);
-        alertIntent.putExtra("PHONE_NUMBER",account.getEmergencyNumber());
+        alertIntent.putExtra("PHONE_NUMBER", account.getEmergencyNumber());
         startActivity(alertIntent);
     }
 

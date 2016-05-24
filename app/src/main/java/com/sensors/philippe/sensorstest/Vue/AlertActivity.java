@@ -36,6 +36,7 @@ public class AlertActivity extends AppCompatActivity implements ChronometerListe
     private List<Integer> bgcolors;
 
     private String phoneNumber ="";
+    private Boolean callMade;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +52,8 @@ public class AlertActivity extends AppCompatActivity implements ChronometerListe
         lLayout_flashing.setBackgroundColor(Color.parseColor("#ffffff"));
 
         if(callTimer == null) {
-            callTimer = new Chronometer(AUTO_CALL_TIMER, MILLIS_IN_FUTURE, COUNT_DOWN_INTERVAL, Chronometer.ChronometerType.FINITE, this);
+            callTimer = new Chronometer(AUTO_CALL_TIMER, MILLIS_IN_FUTURE, COUNT_DOWN_INTERVAL,
+                    Chronometer.ChronometerType.FINITE, this);
         }
         backGroundTimer = new Chronometer(FLASHING_TIMER, 50, 50, Chronometer.ChronometerType.INFINITE, this);
         bgColorCode = 0;
@@ -66,6 +68,7 @@ public class AlertActivity extends AppCompatActivity implements ChronometerListe
         if (extras != null) {
              phoneNumber = extras.getString("PHONE_NUMBER");
         }
+        callMade = false;
     }
 
     @Override
@@ -107,15 +110,13 @@ public class AlertActivity extends AppCompatActivity implements ChronometerListe
         } else if (id.equals(AUTO_CALL_TIMER)) {
             setTextToCallingNow();
             makeCall();
-
         }
     }
 
     public void onClickCallNowBtn(View view) {
-        setTextToCallingNow();
         this.callTimer.stop();
+        setTextToCallingNow();
         makeCall();
-
     }
 
 
@@ -123,7 +124,7 @@ public class AlertActivity extends AppCompatActivity implements ChronometerListe
      * #region Gestion du flash de l'écran
      * */
     public void onClickCancelBtn(View view) {
-        startActivity(new Intent(getBaseContext(), MainActivity.class));
+        goBack(RESULT_CANCELED);
     }
 
     private void refreshView(){
@@ -158,23 +159,28 @@ public class AlertActivity extends AppCompatActivity implements ChronometerListe
         tv_timer.setText(R.string.alert_callingNow);
     }
 
-    /**
-     * Passe l'appel au service d'urgence choisie par l'utilisateur.
-     */
     private void makeCall(){
-        setColissionCallMade();
+        setCollisionCallMade();
 
         Intent in = new Intent(Intent.ACTION_CALL, Uri.parse(phoneNumber));
         try{
             startActivity(in);
+        } catch (android.content.ActivityNotFoundException ex){
+            ex.printStackTrace();
         }
-
-        catch (android.content.ActivityNotFoundException ex){
-        }
+        goBack(RESULT_OK);
     }
 
-    private void setColissionCallMade(){
-        //TODO Modifier l'entré de la collision  pour enregistrer que l'appel fut fait.
+    private void setCollisionCallMade(){
+        callMade = true;
     }
+
+    private void goBack(int resultCode) {
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra(MainActivity.COLLISION_STRENGTH, this.getIntent().getExtras().getDouble(MainActivity.COLLISION_STRENGTH));
+        resultIntent.putExtra(MainActivity.COLLISION_CALLDONE, callMade);
+        setResult(resultCode, resultIntent);
+        finish();
     }
+}
 
