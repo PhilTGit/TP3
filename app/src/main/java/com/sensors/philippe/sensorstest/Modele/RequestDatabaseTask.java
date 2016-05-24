@@ -1,8 +1,10 @@
 package com.sensors.philippe.sensorstest.Modele;
 
+import android.app.Application;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
+import android.widget.Toast;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -36,6 +38,8 @@ public class RequestDatabaseTask extends AsyncTask<Object, Integer, Object> {
     private DatabaseManagerListener listener;
     private RequestType requestType;
     private Object[] extras;
+    private ProtocolException e = null;
+    private boolean connectionSucces = true;
 
     public RequestDatabaseTask() {
 
@@ -70,7 +74,8 @@ public class RequestDatabaseTask extends AsyncTask<Object, Integer, Object> {
                         connection.disconnect();
 
                         if (responseCode == 500) {
-                            //TODO Exception.
+                            connectionSucces = false;
+                            e = new ProtocolException();
                         }
                     }
                     return (String)extras[0];
@@ -90,7 +95,8 @@ public class RequestDatabaseTask extends AsyncTask<Object, Integer, Object> {
                             if (acc != null || responseCode > 200) {
                                 return acc;
                             } else {
-                                //TODO Exception.
+                                connectionSucces = false;
+                                 e = new ProtocolException();
                             }
                         }
                     case CREATE_COLLISION:
@@ -113,7 +119,8 @@ public class RequestDatabaseTask extends AsyncTask<Object, Integer, Object> {
                             connection.disconnect();
 
                             if (responseCode == 500) {
-                                //TODO Exception.
+                                connectionSucces = false;
+                                 e = new ProtocolException();
                             }
                         }
                         return (String)extras[0];
@@ -131,13 +138,14 @@ public class RequestDatabaseTask extends AsyncTask<Object, Integer, Object> {
                             if (accountAsString != null || responseCode > 200) {
                                 return accountAsString;
                             } else {
-                                //TODO Exception.
+                                connectionSucces = false;
+                                 e = new ProtocolException();
                             }
                         }
                     case TEST:
                         return true;
                 default:
-                    //TODO Exception.
+                     e = new ProtocolException();
             }
 
             } catch (MalformedURLException e) {
@@ -153,6 +161,14 @@ public class RequestDatabaseTask extends AsyncTask<Object, Integer, Object> {
 
     @Override
     protected void onPostExecute(Object o) {
+
+        if (e != null){
+            try {
+                throw e;
+            } catch (ProtocolException e1) {
+                e1.printStackTrace();
+            }
+        }
         DatabaseManager.requestResult(this.listener, this.requestType, o);
     }
 
