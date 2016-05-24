@@ -33,6 +33,9 @@ public class MainActivity extends AppCompatActivity implements ChronometerListen
     public static final String COLLISION_STRENGTH = "COLLISION_STRENGTH";
     public static final String COLLISION_CALLDONE = "COLLISION_CALLDONE";
     public static final int ALERT_REQUEST_CODE = 1;
+    public static final String ACCOUNT_INFOS = "ACCOUNT_KEY";
+    public static final String ACCOUNT_WEIGHT = "ACCOUNT_WEIGHT";
+    public static final String ACCOUNT_SEATBELT = "ACCOUNT_SEATBELT";
 
     private TextView tv_X;
     private TextView tv_Y;
@@ -92,6 +95,39 @@ public class MainActivity extends AppCompatActivity implements ChronometerListen
                 this.account = null;
             }
         }
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if(this.account == null){
+            ArrayList<String> accountInfos = savedInstanceState.getStringArrayList(ACCOUNT_INFOS);
+            account.setWeight( savedInstanceState.getFloat(ACCOUNT_WEIGHT));
+            account.setSeatBeltAlwaysOn(savedInstanceState.getBoolean(ACCOUNT_SEATBELT));
+
+
+            if (accountInfos != null) {
+                account.setAccountID(accountInfos.get(0));
+                account.setPassword(accountInfos.get(1));
+                account.setName(accountInfos.get(2));
+                account.setFirstName(accountInfos.get(3));
+                account.setEmergencyNumber(accountInfos.get(4));
+            }
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+      ArrayList <String> accountInfos = new ArrayList<>(5);
+        accountInfos.add(0,account.getAccountID());
+        accountInfos.add(1, account.getPassword());
+        accountInfos.add(2, account.getName());
+        accountInfos.add(3, account.getFirstName());
+        accountInfos.add(4, account.getEmergencyNumber());
+        outState.putStringArrayList(ACCOUNT_INFOS,accountInfos);
+        outState.putFloat(ACCOUNT_WEIGHT,account.getWeight());
+        outState.putBoolean(ACCOUNT_SEATBELT,account.isSeatBeltAlwaysOn());
     }
 
     @Override

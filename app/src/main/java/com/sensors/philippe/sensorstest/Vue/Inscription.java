@@ -80,7 +80,6 @@ public class Inscription extends AppCompatActivity implements DatabaseManagerLis
         if (requestType == RequestType.CREATE_ACCOUNT) {
             if (object != null) {
                 String accountAsString = (String)object;
-                //TODO Appeler le main avec un extra pour connecter automatiquement l'utilisateur.
                 Intent intent = new Intent(getBaseContext(), MainActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("ACCOUNT", accountAsString);
